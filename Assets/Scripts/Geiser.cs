@@ -7,9 +7,16 @@ public class Geiser : MonoBehaviour
     public float MaxRate = 15f;
     public ParticleSystem Vapor;
 
+    
+
     private void Start()
     {
         StartCoroutine(GeiserEruption());
+    }
+
+    private void Update()
+    {
+        
     }
 
     private IEnumerator GeiserEruption()
