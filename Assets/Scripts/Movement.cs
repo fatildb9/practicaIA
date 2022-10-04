@@ -12,12 +12,14 @@ public class Movement : MonoBehaviour
     //referencia al NavMesh de los agentes
     NavMeshAgent agentNavMesh;
 
-    private bool pasarArena;
+    float originalVelocity;
 
     void Start()
     {
         nextGoalWaypoint = 0;
         agentNavMesh = GetComponent<NavMeshAgent>();
+
+        originalVelocity = agentNavMesh.speed;
     }
 
     private void Update()
@@ -31,27 +33,17 @@ public class Movement : MonoBehaviour
         // Find nearest point on water.
         int sandMask = 1 << NavMesh.GetAreaFromName("Sand");
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(transform.position, out hit, 0.5f, sandMask))
+        if (NavMesh.SamplePosition(transform.position, out hit, 0.2f, sandMask))
         {
-            //Reducción de velocidad de la arena
-            pasarArena = true;
-            
-            if (pasarArena == true)
+            if (agentNavMesh.speed == originalVelocity)
             {
                 agentNavMesh.speed = agentNavMesh.speed / 2;
-                pasarArena = false;
             }
-            else
-            {
-
-            }
-            
-
         }
         else
         {
             //vuelta a la velocidad inicial 
-            agentNavMesh.speed = 3.5f;
+            agentNavMesh.speed = originalVelocity;
         }
     }
 
@@ -63,7 +55,6 @@ public class Movement : MonoBehaviour
         {
             //se dirigirá al siguiente objetivo 
             nextGoalWaypoint = (nextGoalWaypoint + 1) % goalWaypoints.Length;
-            
         }
         else
         {
