@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour
     //referencia al NavMesh de los agentes
     NavMeshAgent agentNavMesh;
 
+    private bool pasarArena;
 
     void Start()
     {
@@ -22,29 +23,47 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         PatrullaAgente();
-        //MovimientoArena();
+        MovimientoArena();
     }
 
-    /*public void MovimientoArena()
-    {
+    public void MovimientoArena()
+    {        
         // Find nearest point on water.
-        int sandMask = 1 << NavMesh.GetAreaFromName("sand");
-        NavMesh hit;
-        if (NavMesh.SamplePosition(transform.position, out hit, 2.0f, sandMask))
+        int sandMask = 1 << NavMesh.GetAreaFromName("Sand");
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 0.5f, sandMask))
         {
             //Reducción de velocidad de la arena
-            agentNavMesh.speed = agentNavMesh.speed % 2;
+            pasarArena = true;
+            
+            if (pasarArena == true)
+            {
+                agentNavMesh.speed = agentNavMesh.speed / 2;
+                pasarArena = false;
+            }
+            else
+            {
+
+            }
+            
+
         }
-    }*/
+        else
+        {
+            //vuelta a la velocidad inicial 
+            agentNavMesh.speed = 3.5f;
+        }
+    }
 
     public void PatrullaAgente()
     {
         //Patrulla de movimiento del agente
         //si esta en una distancia del 0,2 de cerca del objetivo...
-        if (Vector3.Distance(transform.position, goalWaypoints[nextGoalWaypoint].position) < 0.2f)
+        if (Vector3.Distance(transform.position, goalWaypoints[nextGoalWaypoint].position) < 0.5f)
         {
             //se dirigirá al siguiente objetivo 
             nextGoalWaypoint = (nextGoalWaypoint + 1) % goalWaypoints.Length;
+            
         }
         else
         {
