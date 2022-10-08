@@ -8,11 +8,11 @@ public class Geiser : MonoBehaviour
     public float MaxRate = 15f;
     public ParticleSystem Vapor;
 
-    private NavMeshObstacle obstacle;
+    private NavMeshObstacle obstacle;   //Variable para detectar el componente NavMeshObstacle 
 
     private void Start()
     {
-        obstacle = GetComponent<NavMeshObstacle>();
+        obstacle = GetComponent<NavMeshObstacle>();     //Asociamos el componente a la variable 
 
         StartCoroutine(GeiserEruption());
     }
@@ -28,10 +28,10 @@ public class Geiser : MonoBehaviour
         while (true)
         {
             emission.enabled = false;
-            obstacle.enabled = false;
+            obstacle.enabled = false;                                               //Desactivamos el componente de NavMeshObstacle
             yield return new WaitForSeconds(Random.Range(MinRate, MaxRate));
             emission.enabled = true;
-            obstacle.enabled = true;
+            obstacle.enabled = true;                                                //Activamos el componente de NavMeshObstacle cuando se active las particulas 
             yield return new WaitForSeconds(Random.Range(MinRate, MaxRate));
         }
     }
