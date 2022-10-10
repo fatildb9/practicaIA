@@ -9605,7 +9605,7 @@ OffMeshLink:
   m_GameObject: {fileID: 1578780906}
   m_Enabled: 1
   serializedVersion: 3
-  m_AreaIndex: 0
+  m_AreaIndex: 2
   m_AgentTypeID: 0
   m_Start: {fileID: 1578780907}
   m_End: {fileID: 1641516859}
@@ -9866,7 +9866,7 @@ OffMeshLink:
   m_GameObject: {fileID: 1641516858}
   m_Enabled: 1
   serializedVersion: 3
-  m_AreaIndex: 0
+  m_AreaIndex: 2
   m_AgentTypeID: 0
   m_Start: {fileID: 0}
   m_End: {fileID: 0}
