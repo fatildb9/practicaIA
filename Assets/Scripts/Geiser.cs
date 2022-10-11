@@ -28,10 +28,10 @@ public class Geiser : MonoBehaviour
         while (true)
         {
             emission.enabled = false;
-            obstacle.enabled = false;                                               //Desactivamos el componente de NavMeshObstacle
+            obstacle.carving = false;                                               //Desactivamos el carve de NavMeshObstacle
             yield return new WaitForSeconds(Random.Range(MinRate, MaxRate));
             emission.enabled = true;
-            obstacle.enabled = true;                                                //Activamos el componente de NavMeshObstacle cuando se active las particulas 
+            obstacle.carving = true;                                                //Activamos el carve de NavMeshObstacle cuando se active las particulas 
             yield return new WaitForSeconds(Random.Range(MinRate, MaxRate));
         }
     }

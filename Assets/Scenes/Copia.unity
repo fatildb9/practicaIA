@@ -2556,6 +2556,7 @@ Transform:
   - {fileID: 624687090}
   - {fileID: 1106459406}
   - {fileID: 1249162895}
+  - {fileID: 536504516}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3364,6 +3365,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1439858727785160061, guid: 0a7323c0cc3b13c43a8d8d914c63ffba, type: 3}
   m_PrefabInstance: {fileID: 533140895}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &536504515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 536504516}
+  m_Layer: 0
+  m_Name: objetivo_005
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &536504516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536504515}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.9, y: 23.47216, z: 22.68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 371389954}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &561401019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6564,7 +6596,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.595, y: 0.3, z: 0.675}
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -7343,7 +7375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249162894}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.74, y: 23.47216, z: 13.52}
+  m_LocalPosition: {x: -42.74, y: 23.47216, z: 10.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8061,6 +8093,22 @@ PrefabInstance:
     - target: {fileID: 696531199277592293, guid: 3f9c8d7e200185a459c62ffb75cf0509, type: 3}
       propertyPath: m_Name
       value: Geiser
+      objectReference: {fileID: 0}
+    - target: {fileID: 8423308922387691798, guid: 3f9c8d7e200185a459c62ffb75cf0509, type: 3}
+      propertyPath: m_Carve
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8423308922387691798, guid: 3f9c8d7e200185a459c62ffb75cf0509, type: 3}
+      propertyPath: m_Extents.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8423308922387691798, guid: 3f9c8d7e200185a459c62ffb75cf0509, type: 3}
+      propertyPath: m_Extents.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8423308922387691798, guid: 3f9c8d7e200185a459c62ffb75cf0509, type: 3}
+      propertyPath: m_Extents.z
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -8896,7 +8944,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.595, y: 0.3, z: 0.675}
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -10260,12 +10308,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2526179340219163284, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
+      propertyPath: m_AutoRepath
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526179340219163284, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
       propertyPath: m_AutoBraking
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5390193846068379527, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
       propertyPath: goalWaypoints.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5390193846068379527, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
       propertyPath: goalWaypoints.Array.data[0]
@@ -10285,6 +10337,10 @@ PrefabInstance:
       objectReference: {fileID: 1249162895}
     - target: {fileID: 5390193846068379527, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
       propertyPath: goalWaypoints.Array.data[4]
+      value: 
+      objectReference: {fileID: 536504516}
+    - target: {fileID: 5390193846068379527, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
+      propertyPath: goalWaypoints.Array.data[5]
       value: 
       objectReference: {fileID: 729788980}
     - target: {fileID: 6122183576180447149, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
@@ -12125,7 +12181,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.595, y: 0.3, z: 0.675}
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1

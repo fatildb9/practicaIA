@@ -21,6 +21,8 @@ public class Movement : MonoBehaviour
     {
         PatrullaAgente();       //Busca la patrulla
         MovimientoArena();      //Busca si está tocando la arena
+
+        agentNavMesh.destination = goalWaypoints[nextGoalWaypoint].position;        //recalcula la ruta de manera continua
     }
 
   
