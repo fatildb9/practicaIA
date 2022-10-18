@@ -8750,26 +8750,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1504462056935097668, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: goalWaypoints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1504462056935097668, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: goalWaypoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 691132589}
-    - target: {fileID: 1504462056935097668, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: goalWaypoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 624687090}
-    - target: {fileID: 1504462056935097668, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: goalWaypoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 1106459406}
-    - target: {fileID: 1504462056935097668, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: goalWaypoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 1249162895}
     - target: {fileID: 6122183576180447149, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
       propertyPath: m_Name
       value: Dopey
@@ -8781,6 +8761,10 @@ PrefabInstance:
     - target: {fileID: 8996049153062219590, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
       propertyPath: m_Height
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996049153062219590, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
+      propertyPath: m_WalkableMask
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -9882,7 +9866,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1641516859}
-  - component: {fileID: 1641516860}
   m_Layer: 0
   m_Name: off_mesh_link_001
   m_TagString: Untagged
@@ -9905,23 +9888,6 @@ Transform:
   m_Father: {fileID: 227855585}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!191 &1641516860
-OffMeshLink:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641516858}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_AreaIndex: 2
-  m_AgentTypeID: 0
-  m_Start: {fileID: 0}
-  m_End: {fileID: 0}
-  m_CostOverride: -1
-  m_BiDirectional: 1
-  m_Activated: 1
-  m_AutoUpdatePositions: 0
 --- !u!1001 &1646787008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10029,6 +9995,30 @@ Transform:
   m_Father: {fileID: 1514157911}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1649642519 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6122183576180447149, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
+  m_PrefabInstance: {fileID: 1443229068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1649642520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649642519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f937d50174c7074a846ff0534976bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoint: {fileID: 0}
+  PatrolPoints:
+  - {fileID: 691132589}
+  - {fileID: 624687090}
+  - {fileID: 1106459406}
+  - {fileID: 1249162895}
+  nextWaypoint: 0
 --- !u!4 &1653725159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3403400212503798401, guid: 9da788673bdc653488e38df6383698cd, type: 3}
