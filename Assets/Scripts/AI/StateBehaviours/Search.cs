@@ -8,7 +8,11 @@ public class Search : StateMachineBehaviour
 {
     private NavMeshAgent agentNavMesh;
     private Agente agenteScript;
-    
+
+    public float limitSeconds = 0.40f;
+    public float seconds = 0;
+
+    private int timeToCharge;
 
     float originalVelocity;     //Variable de la velocidad original del agente
 
@@ -17,17 +21,25 @@ public class Search : StateMachineBehaviour
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
         agenteScript = animator.gameObject.GetComponent<Agente>();
         
-        originalVelocity = agentNavMesh.speed;                          //Guarda la velocidad del agente en la variable
+        originalVelocity = agentNavMesh.speed;                          //Guarda la velocidad del agente en la variable 
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {    
-            //animator.SetFloat();
+    {
+        for (int i = 0; i < limitSeconds; i++)
+        {
+            seconds = i * Time.deltaTime;
+            Debug.Log(seconds);
+        }
+        animator.SetFloat("timeToCharge", seconds);
 
         PatrullaAgente();       //Busca la patrulla
         MovimientoArena();      //Busca si está tocando la arena
 
-
+        /*if (seconds == limitSeconds)
+        {
+            
+        }*/
 
         /*RAYCAST
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -36,7 +48,10 @@ public class Search : StateMachineBehaviour
             print("There is something in front of the object!");*/
     }
 
-
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        
+    }
 
     public void MovimientoArena()       //Método de detección de la arena
     {
