@@ -26,13 +26,16 @@ public class Charge : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        seconds = seconds + 1 * Time.deltaTime;
-        Debug.Log(seconds);
-
+        
         if (seconds >= limitSeconds)
         {
             Debug.Log("voy a search");
-            animator.SetFloat("timeToSearch", seconds);
+            animator.SetBool("timeToCharge", false);
+        }
+        else
+        {
+            seconds = seconds + 1 * Time.deltaTime;
+            Debug.Log(seconds);
         }
 
         agentNavMesh.velocity = agentNavMesh.velocity * 0;

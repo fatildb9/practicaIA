@@ -12,8 +12,6 @@ public class Search : StateMachineBehaviour
     public float limitSeconds = 30f;
     public float seconds = 0;
 
-    private int timeToCharge;
-
     float originalVelocity;     //Variable de la velocidad original del agente
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -37,14 +35,15 @@ public class Search : StateMachineBehaviour
         PatrullaAgente();       //Busca la patrulla
         MovimientoArena();      //Busca si está tocando la arena
 
-
-        seconds = seconds + 1 * Time.deltaTime;
-        Debug.Log(seconds);
-
         if (seconds >= limitSeconds)
         {
             Debug.Log("voy a charge");
-            animator.SetFloat("timeToCharge", seconds);
+            animator.SetBool("timeToCharge", true);
+        }
+        else
+        {
+            seconds = seconds + 1 * Time.deltaTime;
+            Debug.Log(seconds);
         }
 
 
@@ -84,7 +83,7 @@ public class Search : StateMachineBehaviour
     public void PatrullaAgente()
     {
         //si esta en una distancia del 0,2 de cerca del objetivo...
-        if (Vector3.Distance(agenteScript.transform.position, agenteScript.PatrolPoints[agenteScript.nextWaypoint].position) < 0.2f)
+        if (Vector3.Distance(agentNavMesh.transform.position, agenteScript.PatrolPoints[agenteScript.nextWaypoint].position) < 0.5f)
         {
             //se dirigirá al siguiente objetivo 
             agenteScript.nextWaypoint = (agenteScript.nextWaypoint + 1) % agenteScript.PatrolPoints.Length;
@@ -95,5 +94,6 @@ public class Search : StateMachineBehaviour
             //sino está dentro de esta distancia seguirá su camino hacia el objetivo
             agentNavMesh.destination = agenteScript.PatrolPoints[agenteScript.nextWaypoint].position;
         }
+
     }
 }
