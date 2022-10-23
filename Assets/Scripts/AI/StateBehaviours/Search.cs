@@ -9,7 +9,7 @@ public class Search : StateMachineBehaviour
     private NavMeshAgent agentNavMesh;
     private Agente agenteScript;
 
-    public float limitSeconds = 0.40f;
+    public float limitSeconds = 30f;
     public float seconds = 0;
 
     private int timeToCharge;
@@ -22,24 +22,33 @@ public class Search : StateMachineBehaviour
         agenteScript = animator.gameObject.GetComponent<Agente>();
         
         originalVelocity = agentNavMesh.speed;                          //Guarda la velocidad del agente en la variable 
+        seconds = 0;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        for (int i = 0; i < limitSeconds; i++)
+        /*for (int i = 0; i < limitSeconds; i++)
         {
             seconds = i * Time.deltaTime;
             Debug.Log(seconds);
         }
-        animator.SetFloat("timeToCharge", seconds);
+        animator.SetFloat("timeToCharge", seconds);*/
 
         PatrullaAgente();       //Busca la patrulla
         MovimientoArena();      //Busca si está tocando la arena
 
-        /*if (seconds == limitSeconds)
+
+        seconds = seconds + 1 * Time.deltaTime;
+        Debug.Log(seconds);
+
+        if (seconds >= limitSeconds)
         {
-            
-        }*/
+            Debug.Log("voy a charge");
+            animator.SetFloat("timeToCharge", seconds);
+        }
+
+
+
 
         /*RAYCAST
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -50,7 +59,7 @@ public class Search : StateMachineBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        seconds = 0; 
     }
 
     public void MovimientoArena()       //Método de detección de la arena
@@ -75,10 +84,11 @@ public class Search : StateMachineBehaviour
     public void PatrullaAgente()
     {
         //si esta en una distancia del 0,2 de cerca del objetivo...
-        if (Vector3.Distance(agenteScript.transform.position, agenteScript.PatrolPoints[agenteScript.nextWaypoint].position) < 0.5f)
+        if (Vector3.Distance(agenteScript.transform.position, agenteScript.PatrolPoints[agenteScript.nextWaypoint].position) < 0.2f)
         {
             //se dirigirá al siguiente objetivo 
             agenteScript.nextWaypoint = (agenteScript.nextWaypoint + 1) % agenteScript.PatrolPoints.Length;
+            Debug.Log("aaaaaaaa");
         }
         else
         {
