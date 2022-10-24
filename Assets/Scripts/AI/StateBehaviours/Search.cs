@@ -13,8 +13,6 @@ public class Search : StateMachineBehaviour
     public float seconds = 0;
 
     float originalVelocity;     //Variable de la velocidad original del agente
-    public RaycastHit hit;
-
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -42,13 +40,12 @@ public class Search : StateMachineBehaviour
             //Debug.Log(seconds);
         }
 
-
-
-
-        
+        RaycastHit hit;
         Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
-        if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 10f))
+        Debug.DrawRay(agentNavMesh.transform.position, fwd, Color.red);
+        if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))
         {
+            Debug.Log("HE VISTO ALGO");
             animator.SetBool("timeToScan", true);
         }
     }
