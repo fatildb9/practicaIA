@@ -13,6 +13,8 @@ public class Search : StateMachineBehaviour
     public float seconds = 0;
 
     float originalVelocity;     //Variable de la velocidad original del agente
+    public RaycastHit hit;
+
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -25,12 +27,6 @@ public class Search : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        /*for (int i = 0; i < limitSeconds; i++)
-        {
-            seconds = i * Time.deltaTime;
-            Debug.Log(seconds);
-        }
-        animator.SetFloat("timeToCharge", seconds);*/
 
         PatrullaAgente();       //Busca la patrulla
         MovimientoArena();      //Busca si está tocando la arena
@@ -43,23 +39,27 @@ public class Search : StateMachineBehaviour
         else
         {
             seconds = seconds + 1 * Time.deltaTime;
-            Debug.Log(seconds);
+            //Debug.Log(seconds);
         }
 
 
 
 
-        /*RAYCAST
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-
-        if (Physics.Raycast(transform.position, fwd, 10))
-            print("There is something in front of the object!");*/
+        
+        Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 10f))
+        {
+            animator.SetBool("timeToScan", true);
+        }
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         seconds = 0; 
     }
+
+
+
 
     public void MovimientoArena()       //Método de detección de la arena
     {
