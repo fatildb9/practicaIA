@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Scan : StateMachineBehaviour
 {
+    //SCANEA EL OBJETO ENCONTRADO TODO EL RATO (DESTROY EL OBJETO) COMO HAGO PARA QUE PARE DE ESCANEAR LO MISMO  
     public float limitSeconds = 5f;
     public float seconds = 0;
 
@@ -29,13 +30,13 @@ public class Scan : StateMachineBehaviour
         {
             if (esRoca == true)
             {
-                animator.SetTrigger("timeToCollect");
+                animator.SetBool("timeToCollect", true);
                 Debug.Log("lo he visto");
             }
             else
             {
                 Debug.Log("voy a search xq no es una roca");
-                animator.SetTrigger("timeToScan");
+                animator.SetBool("timeToScan", false);
             }
         }
         else
@@ -64,6 +65,7 @@ public class Scan : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //animator.SetBool("timeToScan", false);
         seconds = 0;
     }
 }

@@ -45,8 +45,15 @@ public class Search : StateMachineBehaviour
         Debug.DrawRay(agentNavMesh.transform.position, fwd, Color.red);
         if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))
         {
-            Debug.Log("HE VISTO ALGO");
-            animator.SetTrigger("timeToScan");
+            if (hit.transform.tag == ("noScan"))
+            {
+
+            }
+            else
+            {
+                Debug.Log("HE VISTO ALGO");
+                animator.SetBool("timeToScan", true);
+            }
         }
     }
 
