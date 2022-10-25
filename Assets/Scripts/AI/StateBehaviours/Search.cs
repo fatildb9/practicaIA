@@ -46,7 +46,7 @@ public class Search : StateMachineBehaviour
         if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))
         {
             Debug.Log("HE VISTO ALGO");
-            animator.SetBool("timeToScan", true);
+            animator.SetTrigger("timeToScan");
         }
     }
 

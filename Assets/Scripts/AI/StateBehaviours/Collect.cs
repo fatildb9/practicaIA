@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Scan : StateMachineBehaviour
+public class Collect : StateMachineBehaviour
 {
-    public float limitSeconds = 5f;
+    public float limitSeconds = 3f;
     public float seconds = 0;
+
+    public int inventario;
 
     private NavMeshAgent agentNavMesh;
     float originalVelocity;     //Variable de la velocidad original del agente
 
-    private bool esRoca; 
-
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
-
         seconds = 0;
+
+        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
         originalVelocity = agentNavMesh.speed;
     }
 
@@ -27,43 +27,30 @@ public class Scan : StateMachineBehaviour
 
         if (seconds >= limitSeconds)
         {
-            if (esRoca == true)
+            inventario++;
+
+            if (inventario == 3)
             {
-                animator.SetTrigger("timeToCollect");
-                Debug.Log("lo he visto");
+                Debug.Log("Me voy a base q estoy lleno");
+                animator.SetTrigger("timeToBase");
             }
             else
             {
-                Debug.Log("voy a search xq no es una roca");
-                animator.SetTrigger("timeToScan");
+                Debug.Log("voy a search");
+                animator.SetTrigger("timeToBase");
             }
         }
         else
         {
             seconds = seconds + 1 * Time.deltaTime;
-            Debug.Log("scan: " + seconds);
+            Debug.Log("collect: " + seconds);
         }
-       
-        RaycastHit hit;
-        Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
-
-        if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
-        {  
-            if (hit.transform.tag == ("Rock"))
-            {
-                Debug.Log("Entro");
-                esRoca = true;
-            }
-            else
-            {
-                esRoca = false;
-            }
-        }
-      
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        agentNavMesh.speed = originalVelocity;
+
         seconds = 0;
     }
 }
