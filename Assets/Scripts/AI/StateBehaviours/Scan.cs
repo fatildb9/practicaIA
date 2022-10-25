@@ -21,8 +21,16 @@ public class Scan : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        seconds = seconds + 1 * Time.deltaTime;
-        Debug.Log(seconds);
+        if (seconds >= limitSeconds)
+        {
+            
+        }
+        else
+        {
+            seconds = seconds + 1 * Time.deltaTime;
+            Debug.Log("scan: " + seconds);
+        }
+       
 
         agentNavMesh.velocity = agentNavMesh.velocity * 0;
 
@@ -35,6 +43,7 @@ public class Scan : StateMachineBehaviour
             Debug.Log("Entro");
             if (seconds >= limitSeconds)
             {
+                Debug.Log(hit.transform.tag);
                 if (hit.transform.tag == ("Rock"))
                 {
                     Debug.Log("voy a collect");
