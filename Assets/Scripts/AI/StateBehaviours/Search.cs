@@ -12,16 +12,16 @@ public class Search : StateMachineBehaviour
     public float limitSeconds = 30f;
     public float seconds = 0;
 
-    float originalVelocity;     //Variable de la velocidad original del agente
-    public Transform objetoScaneado;
+    float originalVelocity = 3.5f;     //Variable de la velocidad original del agente
+    private Transform objetoScaneado;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
         agenteScript = animator.gameObject.GetComponent<Agente>();
         
-        originalVelocity = agentNavMesh.speed;                          //Guarda la velocidad del agente en la variable 
         seconds = 0;
+        originalVelocity = 3.5f;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -46,16 +46,14 @@ public class Search : StateMachineBehaviour
         Debug.DrawRay(agentNavMesh.transform.position, fwd, Color.red);
         if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))
         {
-            
-
-            if (hit.transform.tag == ("noScan"))
+            if (agenteScript.objetoScaneado != hit.transform)
             {
-
-            }
-            else
-            {
-                Debug.Log("HE VISTO ALGO");
-                animator.SetBool("timeToScan", true);
+                if(hit.transform.tag != "noScan")
+                {
+                    agenteScript.objetoScaneado = hit.transform;
+                    Debug.Log("HE VISTO ALGO");
+                    animator.SetBool("timeToScan", true);
+                }
             }
         }
     }

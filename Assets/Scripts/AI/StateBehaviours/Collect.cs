@@ -12,7 +12,6 @@ public class Collect : StateMachineBehaviour
     public int inventario;
 
     private NavMeshAgent agentNavMesh;
-    float originalVelocity;     //Variable de la velocidad original del agente
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -20,12 +19,12 @@ public class Collect : StateMachineBehaviour
         animator.SetBool("timeToScan", false);
 
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
-        originalVelocity = agentNavMesh.speed;
+        agentNavMesh.speed = 0;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.velocity = agentNavMesh.velocity * 0;
+        agentNavMesh.speed = 0;
 
         if (seconds >= limitSeconds)
         {
@@ -53,8 +52,7 @@ public class Collect : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.speed = originalVelocity;
-
+        animator.SetBool("timeToCollect", false);
         seconds = 0;
     }
 }

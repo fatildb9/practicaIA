@@ -11,9 +11,9 @@ public class Scan : StateMachineBehaviour
 
     private NavMeshAgent agentNavMesh;
     private Agente agenteScript;
-    float originalVelocity;     //Variable de la velocidad original del agente
 
     private bool esRoca;
+    private bool esPlanta;
     private Transform objetoScaneado; 
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -22,55 +22,89 @@ public class Scan : StateMachineBehaviour
         agenteScript = animator.gameObject.GetComponent<Agente>();
 
         seconds = 0;
-        originalVelocity = agentNavMesh.speed;
+        agentNavMesh.speed = 0;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.velocity = agentNavMesh.velocity * 0;
-
-        RaycastHit hit;
-        Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
+        agentNavMesh.speed = 0;
 
         if (seconds >= limitSeconds)
         {
-            if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f) && objetoScaneado != hit.transform)
+            if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")
             {
-                if (hit.transform.tag == ("Rock"))
+                if (esPlanta == true)
                 {
-                    Debug.Log("Entro");
-                    esRoca = true;
+                    animator.SetBool("timeToCollect", true);
+                    Debug.Log("lo he visto");
                 }
                 else
                 {
-                    esRoca = false;
+                    Debug.Log("voy a search xq no es una roca");
+                    animator.SetBool("timeToScan", false);
                 }
-
-                objetoScaneado = hit.transform;
             }
-
-            if (esRoca == true)
+            else if (agenteScript.transform.name == "Dopey")
             {
-                animator.SetBool("timeToCollect", true);
-                Debug.Log("lo he visto");
-            }
-            else
-            {
-                Debug.Log("voy a search xq no es una roca");
-                animator.SetBool("timeToScan", false);
-            }
-
+                if (esRoca == true)
+                {
+                    animator.SetBool("timeToCollect", true);
+                    Debug.Log("lo he visto");
+                }
+                else
+                {
+                    Debug.Log("voy a search xq no es una roca");
+                    animator.SetBool("timeToScan", false);
+                }
+            }  
         }
         else
         {
             seconds = seconds + 1 * Time.deltaTime;
             Debug.Log("scan: " + seconds);
-            
         }
 
-        
-      
+        RaycastHit hit;
+        Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
+        {
+            agenteScript.objetoScaneadoScan = hit.transform;
+
+            if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")
+            {
+                if (hit.transform.tag == ("Planta"))
+                {
+                    Debug.Log("PLANTAAA");
+                    esPlanta = true;
+                    esRoca = false;
+                }
+                else
+                {
+                    esPlanta = false;
+                    esRoca = false;
+                }
+            }
+            else if (agenteScript.transform.name == "Dopey")
+            {
+                if (hit.transform.tag == ("Rock"))
+                {
+                    Debug.Log("Entro");
+                    esRoca = true;
+                    esPlanta = false;
+                }
+                else
+                {
+                    esPlanta = false;
+                    esRoca = false;
+                }
+            }
+
+        }
     }
+    
+    /* esto es algo de la rotacion
+    x += Time.deltaTime* 10;
+        transform.rotation = Quaternion.Euler(x,0,0);*/
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

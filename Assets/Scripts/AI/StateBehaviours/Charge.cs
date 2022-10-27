@@ -12,21 +12,20 @@ public class Charge : StateMachineBehaviour
     public float limitSeconds = 10f;
     public float seconds = 0;
 
-    float originalVelocity;     //Variable de la velocidad original del agente
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
         agenteScript = animator.gameObject.GetComponent<Agente>();
-        
-        originalVelocity = agentNavMesh.speed;                          //Guarda la velocidad del agente en la variable 
 
+        agentNavMesh.speed = 0;
         seconds = 0;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        agentNavMesh.speed = 0;
+
         if (seconds >= limitSeconds)
         {
             Debug.Log("voy a search");
@@ -45,6 +44,5 @@ public class Charge : StateMachineBehaviour
     {
         seconds = 0;
 
-        agentNavMesh.speed = originalVelocity;
     }
 }

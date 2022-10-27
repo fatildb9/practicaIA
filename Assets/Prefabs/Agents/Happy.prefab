@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1401451636063552248
 Transform:
   m_ObjectHideFlags: 0
@@ -97,6 +97,8 @@ MonoBehaviour:
   - {fileID: 0}
   nextWaypoint: 0
   baseWaypoint: {fileID: 0}
+  objetoScaneado: {fileID: 0}
+  objetoScaneadoScan: {fileID: 0}
 --- !u!1001 &2319480771305013703
 PrefabInstance:
   m_ObjectHideFlags: 0
