@@ -16,6 +16,7 @@ public class Collect : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         seconds = 0;
+        animator.SetBool("timeToScan", false);
 
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
         originalVelocity = agentNavMesh.speed;

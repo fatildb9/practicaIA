@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1401451636063552248}
   - component: {fileID: 8996049153062219590}
   - component: {fileID: 1758198090667901575}
+  - component: {fileID: 1649642520}
   m_Layer: 0
   m_Name: Dopey
-  m_TagString: Untagged
+  m_TagString: Rover
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +55,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1
   m_BaseOffset: 0
-  m_WalkableMask: 1
+  m_WalkableMask: 17
   m_ObstacleAvoidanceType: 4
 --- !u!95 &1758198090667901575
 Animator:
@@ -76,6 +77,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1649642520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122183576180447149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f937d50174c7074a846ff0534976bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  PatrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  nextWaypoint: 0
+  baseWaypoint: {fileID: 0}
 --- !u!1001 &2319480771305013703
 PrefabInstance:
   m_ObjectHideFlags: 0
