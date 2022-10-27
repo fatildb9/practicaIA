@@ -13,6 +13,7 @@ public class Search : StateMachineBehaviour
     public float seconds = 0;
 
     float originalVelocity;     //Variable de la velocidad original del agente
+    public Transform objetoScaneado;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -45,6 +46,8 @@ public class Search : StateMachineBehaviour
         Debug.DrawRay(agentNavMesh.transform.position, fwd, Color.red);
         if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))
         {
+            
+
             if (hit.transform.tag == ("noScan"))
             {
 

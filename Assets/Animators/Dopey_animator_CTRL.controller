@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limitSeconds: 3
   seconds: 0
-  inventario: 2
+  inventario: 0
 --- !u!1102 &-1415149017573873456
 AnimatorState:
   serializedVersion: 6
@@ -488,6 +488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limitSeconds: 30
   seconds: 0
+  objetoScaneado: {fileID: 0}
 --- !u!1102 &5384247864350575678
 AnimatorState:
   serializedVersion: 6
