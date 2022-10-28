@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7686008327085588483}
   - component: {fileID: 7960372719507600689}
   - component: {fileID: 5385776893706602881}
+  - component: {fileID: 914368462940330639}
   m_Layer: 0
   m_Name: Happy
   m_TagString: Rover
@@ -97,8 +98,22 @@ MonoBehaviour:
   - {fileID: 0}
   nextWaypoint: 0
   baseWaypoint: {fileID: 0}
+  inventario: 0
   objetoScaneado: {fileID: 0}
   objetoScaneadoScan: {fileID: 0}
+--- !u!65 &914368462940330639
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122183576180447149}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.77680063, z: 1}
+  m_Center: {x: 0, y: 0.31010568, z: 0}
 --- !u!1001 &2319480771305013703
 PrefabInstance:
   m_ObjectHideFlags: 0

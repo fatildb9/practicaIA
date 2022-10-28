@@ -43,18 +43,26 @@ public class Search : StateMachineBehaviour
 
         RaycastHit hit;
         Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
-        Debug.DrawRay(agentNavMesh.transform.position, fwd, Color.red);
+        Debug.DrawRay(agentNavMesh.transform.position, fwd * 5f, Color.red);
         if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))
         {
             if (agenteScript.objetoScaneado != hit.transform)
             {
                 if(hit.transform.tag != "noScan")
                 {
-                    agenteScript.objetoScaneado = hit.transform;
-                    Debug.Log("HE VISTO ALGO");
-                    animator.SetBool("timeToScan", true);
+                    if (agenteScript.transform.name == "Grumpy" && hit.transform.tag == "Rover")
+                    {
+                        agenteScript.target = hit.transform;
+                        animator.SetBool("timeToFollow", true);
+                    }
+                    else
+                    {
+                        agenteScript.objetoScaneado = hit.transform;
+                        Debug.Log("HE VISTO ALGO");
+                        animator.SetBool("timeToScan", true);
+                    }                    
                 }
-            }
+            }        
         }
     }
 

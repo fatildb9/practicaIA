@@ -9,6 +9,9 @@ public class Agente : MonoBehaviour
     public int nextWaypoint = 0;                 //Número de array por el que va el agente
 
     public Transform baseWaypoint;
+
+    public int inventario;
+    
     public Transform objetoScaneado;
     public Transform objetoScaneadoScan;
 }

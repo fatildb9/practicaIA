@@ -22,6 +22,7 @@ public class Base : StateMachineBehaviour
     {
         if (Vector3.Distance(agentNavMesh.transform.position, agenteScript.baseWaypoint.position) < 0.5f)
         {
+            agenteScript.inventario = 0;
             animator.SetBool("timeToBase", false);
             Debug.Log("llegue a base");
         }

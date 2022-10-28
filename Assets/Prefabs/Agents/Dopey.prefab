@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8996049153062219590}
   - component: {fileID: 1758198090667901575}
   - component: {fileID: 1649642520}
+  - component: {fileID: 5322838741373133763}
   m_Layer: 0
   m_Name: Dopey
   m_TagString: Rover
@@ -97,6 +98,22 @@ MonoBehaviour:
   - {fileID: 0}
   nextWaypoint: 0
   baseWaypoint: {fileID: 0}
+  inventario: 0
+  objetoScaneado: {fileID: 0}
+  objetoScaneadoScan: {fileID: 0}
+--- !u!65 &5322838741373133763
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122183576180447149}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.77623224, z: 1}
+  m_Center: {x: 0, y: 0.35893106, z: 0}
 --- !u!1001 &2319480771305013703
 PrefabInstance:
   m_ObjectHideFlags: 0

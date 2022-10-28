@@ -66,6 +66,7 @@ public class Scan : StateMachineBehaviour
 
         RaycastHit hit;
         Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
+        Debug.DrawRay(agentNavMesh.transform.position, fwd * 5f, Color.red);
         if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
         {
             agenteScript.objetoScaneadoScan = hit.transform;

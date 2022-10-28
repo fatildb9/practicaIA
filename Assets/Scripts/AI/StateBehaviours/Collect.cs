@@ -9,9 +9,8 @@ public class Collect : StateMachineBehaviour
     public float limitSeconds = 3f;
     public float seconds = 0;
 
-    public int inventario;
-
     private NavMeshAgent agentNavMesh;
+    private Agente agenteScript;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -19,6 +18,7 @@ public class Collect : StateMachineBehaviour
         animator.SetBool("timeToScan", false);
 
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
+        agenteScript = animator.gameObject.GetComponent<Agente>();
         agentNavMesh.speed = 0;
     }
 
@@ -28,14 +28,12 @@ public class Collect : StateMachineBehaviour
 
         if (seconds >= limitSeconds)
         {
-            inventario++;
+            agenteScript.inventario++;
 
-            if (inventario == 3)
+            if (agenteScript.inventario == 3)
             {
                 Debug.Log("Me voy a base q estoy lleno");
                 animator.SetBool("timeToBase", true);
-
-                inventario = 0;
             }
             else
             {
