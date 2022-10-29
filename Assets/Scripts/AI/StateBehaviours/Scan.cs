@@ -14,7 +14,10 @@ public class Scan : StateMachineBehaviour
 
     private bool esRoca;
     private bool esPlanta;
-    private Transform objetoScaneado; 
+    private Transform objetoScaneado;
+
+    public float startAngle;
+    public float angleRotation;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -23,12 +26,58 @@ public class Scan : StateMachineBehaviour
 
         seconds = 0;
         agentNavMesh.speed = 0;
+        
+        startAngle = agentNavMesh.transform.rotation.y;
+        //angleRotation = startAngle + 360;
+        angleRotation = -startAngle;
+        Debug.Log(startAngle);
+        Debug.Log(angleRotation);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agentNavMesh.speed = 0;
 
+        if (agentNavMesh.transform.name == "Happy")
+        {
+            if (startAngle >= angleRotation)
+            {
+                Debug.Log("VUELTICAAAAA");
+            }
+            else
+            {
+                float x = angleRotation % limitSeconds;
+                //float x = startAngle +360;
+                //x += Time.deltaTime * 5;
+                //agenteScript.transform.rotation = Quaternion.Euler(0, x, 0);
+                agentNavMesh.angularSpeed = x;
+                agentNavMesh.transform.Rotate(new Vector3(0, 360f * Time.deltaTime, 0));
+                startAngle = agentNavMesh.transform.rotation.y;
+                Debug.Log(startAngle);
+
+            }
+
+
+
+            /*float angleRotation = startAngle + 360;
+            float angle = angleRotation % limitSeconds;
+
+            if (startAngle == angleRotation)
+            {
+
+            }
+            else
+            {
+                startAngle += seconds * angle;
+                agenteScript.transform.rotation = Quaternion.Euler(0, startAngle, 0);
+            }*/
+
+            //agenteScript.transform.rotation += Time.deltaTime * limitSeconds;
+            //giro += Time.deltaTime * limitSeconds;
+            //agenteScript.transform.Rotate(new Vector3(0, velocityRotation, 0));
+
+            //agenteScript.transform.rotation = Quaternion.Euler(0, angleRotation , 0);
+        }
         if (seconds >= limitSeconds)
         {
             if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")
@@ -61,7 +110,7 @@ public class Scan : StateMachineBehaviour
         else
         {
             seconds = seconds + 1 * Time.deltaTime;
-            Debug.Log("scan: " + seconds);
+            //Debug.Log("scan: " + seconds);
         }
 
         RaycastHit hit;
@@ -102,10 +151,6 @@ public class Scan : StateMachineBehaviour
 
         }
     }
-    
-    /* esto es algo de la rotacion
-    x += Time.deltaTime* 10;
-        transform.rotation = Quaternion.Euler(x,0,0);*/
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

@@ -44,7 +44,7 @@ public class Collect : StateMachineBehaviour
         else
         {
             seconds = seconds + 1 * Time.deltaTime;
-            Debug.Log("collect: " + seconds);
+            //Debug.Log("collect: " + seconds);
         }
     }
 

@@ -17,6 +17,7 @@ public class Stunned : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.Log("estoySTUNNED");
         agentNavMesh.velocity = agentNavMesh.velocity * 0;
 
         if (seconds >= limitSeconds)

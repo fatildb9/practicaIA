@@ -11,6 +11,8 @@ public class Agente : MonoBehaviour
     public Transform baseWaypoint;
 
     public int inventario;
+
+    public GameObject happy;
     
     public Transform objetoScaneado;
     public Transform objetoScaneadoScan;

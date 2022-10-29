@@ -8,10 +8,15 @@ public class hit : StateMachineBehaviour
     private Agente agenteScript;
     private NavMeshAgent agentNavMesh;
 
+    public Transform happyRover;
+
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agenteScript = animator.gameObject.GetComponent<Agente>();
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
+
+        agenteScript.transform.name = "Happy";
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -23,7 +28,9 @@ public class hit : StateMachineBehaviour
         {
             if (hit.transform.tag == "Rover")
             {
-                animator.SetBool("timeToFollow", false);
+                //animator.GetBehaviour<Stunned>();
+                animator.SetBool("timeToStunned", true);
+                animator.SetBool("timeToBase", true);
             }
         }
     }
