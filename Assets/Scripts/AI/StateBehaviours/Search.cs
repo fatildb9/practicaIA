@@ -13,7 +13,6 @@ public class Search : StateMachineBehaviour
     public float seconds = 0;               //variable contador de segundos
 
     float originalVelocity = 3.5f;          //Variable de la velocidad original del agente
-    //private Transform objetoScaneado;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -97,7 +96,6 @@ public class Search : StateMachineBehaviour
         {
             //se dirigirá al siguiente objetivo 
             agenteScript.nextWaypoint = (agenteScript.nextWaypoint + 1) % agenteScript.PatrolPoints.Length;
-            Debug.Log("aaaaaaaa");
         }
         else
         {

@@ -10,9 +10,6 @@ public class Agente : MonoBehaviour
 
     public Transform baseWaypoint;      //Punto para ir a la base 
 
-    //public int inventario;
-    //public Transform roverGolpeado;
-
     public Transform objetoScaneado;        //variable para ver que objeto ha escaneado 
     public Transform objetoScaneadoScan;    //variable para ver que objeto ha escaneado en el estado de Scan
 }
