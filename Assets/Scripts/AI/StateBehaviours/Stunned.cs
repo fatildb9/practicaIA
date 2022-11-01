@@ -5,30 +5,28 @@ using UnityEngine.AI;
 
 public class Stunned : StateMachineBehaviour
 {
-    public float limitSeconds = 5f;
-    public float seconds = 0;
+    public float limitSeconds = 5f;     //variable que guarda el limite de tiempo en el que esta en el estado 
+    public float seconds = 0;           //variable contador de tiempo 
 
-    private NavMeshAgent agentNavMesh;
+    private NavMeshAgent agentNavMesh;  //referencia al Nav Mesh del agente 
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
+        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();    //referencia al Nav Mesh del agente
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("estoySTUNNED");
-        agentNavMesh.velocity = agentNavMesh.velocity * 0;
+        agentNavMesh.speed = 0;     //el agente se para
 
-        if (seconds >= limitSeconds)
+        //CONTADOR DE SEGUNDOS DE STUNNED
+        if (seconds >= limitSeconds)        //si el contador llega a mas que el limite... 
         {
-            Debug.Log("voy a search q me han pegado");
-            animator.SetBool("timeToStunned", false);
+            animator.SetTrigger("timeToSearch");    //Activamos el trigger para ir a search
         }
         else
         {
-            seconds = seconds + 1 * Time.deltaTime;
-            Debug.Log("stunned: " + seconds);
+            seconds = seconds + 1 * Time.deltaTime; //Mientras aumentando el contador 
         }
     }
 

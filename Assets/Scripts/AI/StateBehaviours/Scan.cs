@@ -5,155 +5,147 @@ using UnityEngine.AI;
 
 public class Scan : StateMachineBehaviour
 {
-    //SCANEA EL OBJETO ENCONTRADO TODO EL RATO (DESTROY EL OBJETO) COMO HAGO PARA QUE PARE DE ESCANEAR LO MISMO  
-    public float limitSeconds = 5f;
-    public float seconds = 0;
+    public float limitSeconds = 5f;         //limite de segundos que está en este estado
+    public float seconds = 0;               //variable contador de segundos 
 
-    private NavMeshAgent agentNavMesh;
-    private Agente agenteScript;
+    private NavMeshAgent agentNavMesh;      //referencia al Nav Mesh del agente
+    private Agente agenteScript;            //referencia al script (contenedor) de agente
 
-    private bool esRoca;
-    private bool esPlanta;
-    private Transform objetoScaneado;
+    private bool esRoca;                    //variable que decide si es una roca
+    private bool esPlanta;                  //variable que decide si es una planta
 
-    public float startAngle;
-    public float angleRotation;
+    private bool startScan;                 //variable para empezar a escanear
+
+   
+    Quaternion Inicoangle;                  //variable que obtiene la rotacion 
+    public Vector3 startAngleRot;           //angulo inicial del agente 
+    public Vector3 finishAngleRot;          //angulo final en el que debe terminar
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
-        agenteScript = animator.gameObject.GetComponent<Agente>();
+        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
+        agenteScript = animator.gameObject.GetComponent<Agente>();              //referencia al script (contenedor) de agente
 
-        seconds = 0;
-        agentNavMesh.speed = 0;
+        seconds = 0;                //reseteo de segundos
+        agentNavMesh.speed = 0;     //el agente se para
         
-        startAngle = agentNavMesh.transform.rotation.y;
-        //angleRotation = startAngle + 360;
-        angleRotation = -startAngle;
-        Debug.Log(startAngle);
-        Debug.Log(angleRotation);
+        Inicoangle = agentNavMesh.transform.rotation;               //recogemos en la variable la rotacion 
+        startAngleRot = Inicoangle.eulerAngles;                     
+        finishAngleRot = startAngleRot + new Vector3(0, 360, 0);    //le sumamos 360 grados al eje y para que de una vuelta
+
+        startScan = false;          //ponemos la variable en false para que no empiece con el scan 
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.speed = 0;
+        agentNavMesh.speed = 0;     //para que el agente este parado 
 
+        //SI ES HAPPY DA UNA VUELTA ANTES
         if (agentNavMesh.transform.name == "Happy")
         {
-            if (startAngle >= angleRotation)
-            {
-                Debug.Log("VUELTICAAAAA");
+            if (startAngleRot.y >= finishAngleRot.y)        //Si el angulo es mayor o igual que el angulo final...
+            {       
+                startScan = true;                           //Comienza el scan
             }
             else
             {
-                float x = angleRotation % limitSeconds;
-                //float x = startAngle +360;
-                //x += Time.deltaTime * 5;
-                //agenteScript.transform.rotation = Quaternion.Euler(0, x, 0);
-                agentNavMesh.angularSpeed = x;
-                agentNavMesh.transform.Rotate(new Vector3(0, 360f * Time.deltaTime, 0));
-                startAngle = agentNavMesh.transform.rotation.y;
-                Debug.Log(startAngle);
-
-            }
-
-
-
-            /*float angleRotation = startAngle + 360;
-            float angle = angleRotation % limitSeconds;
-
-            if (startAngle == angleRotation)
-            {
-
-            }
-            else
-            {
-                startAngle += seconds * angle;
-                agenteScript.transform.rotation = Quaternion.Euler(0, startAngle, 0);
-            }*/
-
-            //agenteScript.transform.rotation += Time.deltaTime * limitSeconds;
-            //giro += Time.deltaTime * limitSeconds;
-            //agenteScript.transform.Rotate(new Vector3(0, velocityRotation, 0));
-
-            //agenteScript.transform.rotation = Quaternion.Euler(0, angleRotation , 0);
-        }
-        if (seconds >= limitSeconds)
-        {
-            if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")
-            {
-                if (esPlanta == true)
+                startAngleRot.y++;                                                              //Se va sumando al eje y
+                agentNavMesh.transform.rotation = Quaternion.Euler(0, startAngleRot.y, 0);      //Va rotando en el eje y 
+                
+                //COMPROBAR SI HAY OTRO ROVER MIENTRAS GIRA
+                RaycastHit hit;
+                Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
+                Debug.DrawRay(agentNavMesh.transform.position, fwd * 5f, Color.red);
+                if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
                 {
-                    animator.SetBool("timeToCollect", true);
-                    Debug.Log("lo he visto");
-                }
-                else
-                {
-                    Debug.Log("voy a search xq no es una roca");
-                    animator.SetBool("timeToScan", false);
+                    if (hit.transform.tag == "Rover")               //Si el rayo de 5 metros detecta un rover...
+                    {
+                        animator.SetBool("timeToScan", false);      //Sale del estado de Scan
+                    }
                 }
             }
-            else if (agenteScript.transform.name == "Dopey")
-            {
-                if (esRoca == true)
-                {
-                    animator.SetBool("timeToCollect", true);
-                    Debug.Log("lo he visto");
-                }
-                else
-                {
-                    Debug.Log("voy a search xq no es una roca");
-                    animator.SetBool("timeToScan", false);
-                }
-            }  
         }
         else
         {
-            seconds = seconds + 1 * Time.deltaTime;
-            //Debug.Log("scan: " + seconds);
+            startScan = true;       //Si no es Happy pasa a escanear directamente
         }
 
-        RaycastHit hit;
-        Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
-        Debug.DrawRay(agentNavMesh.transform.position, fwd * 5f, Color.red);
-        if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
+        //ESTADO DE ESCANEAR
+        if (startScan == true)
         {
-            agenteScript.objetoScaneadoScan = hit.transform;
-
-            if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")
+            //CONTADOR DE SEGUNDOS DE SCAN
+            if (seconds >= limitSeconds)            //Si los segundos son iguales o mayores al limite...
             {
-                if (hit.transform.tag == ("Planta"))
+                if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")          //Si es Grumpy o Happy...
                 {
-                    Debug.Log("PLANTAAA");
-                    esPlanta = true;
-                    esRoca = false;
+                    if (esPlanta == true)                           //Y es planta...
+                    {
+                        animator.SetBool("timeToCollect", true);    //Pasa al estado de Collect
+                    }
+                    else
+                    {
+                        animator.SetBool("timeToScan", false);      //Sino se va del estado de Scan 
+                    }
                 }
-                else
+                else if (agenteScript.transform.name == "Dopey")    //Si es Dopey...
                 {
-                    esPlanta = false;
-                    esRoca = false;
+                    if (esRoca == true)                             //Si es una roca...
+                    {
+                        animator.SetBool("timeToCollect", true);    //Pasa al estado de Collect
+                    }
+                    else
+                    {
+                        animator.SetBool("timeToScan", false);      //Sino se irá del estado de Scan 
+                    }
                 }
             }
-            else if (agenteScript.transform.name == "Dopey")
+            else
             {
-                if (hit.transform.tag == ("Rock"))
-                {
-                    Debug.Log("Entro");
-                    esRoca = true;
-                    esPlanta = false;
-                }
-                else
-                {
-                    esPlanta = false;
-                    esRoca = false;
-                }
+                seconds = seconds + 1 * Time.deltaTime;             //Va sumando el contador de segundos
             }
 
+            //DETECCIÓN DE OBJETOS A 5 METROS
+            RaycastHit hit;
+            Vector3 fwd = agentNavMesh.transform.TransformDirection(Vector3.forward);
+            Debug.DrawRay(agentNavMesh.transform.position, fwd * 5f, Color.red);
+            if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
+            {
+                agenteScript.objetoScaneadoScan = hit.transform;    //Guarda el objeto escaneado en una variable 
+
+                if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")  //Si es Grumpy o Happy entonces...
+                {
+                    if (hit.transform.tag == ("Planta"))        //Si contra lo que choca es una planta...
+                    {
+                        esPlanta = true;    //Detecta que la planta es true
+                        esRoca = false;     //Detecta que no es roca
+                    }
+                    else
+                    {
+                        esPlanta = false;   //Detecta que no es roca
+                        esRoca = false;     //Detecta que no es roca
+                    }
+                }
+                else if (agenteScript.transform.name == "Dopey")    //Si es Dopey...
+                {
+                    if (hit.transform.tag == ("Rock"))  //Si contra lo que choca es una roca...
+                    {
+                        esRoca = true;      //Detecta que es roca
+                        esPlanta = false;   //Detecta que no es planta
+                    }
+                    else
+                    {
+                        esPlanta = false;   //Detecta que no es planta
+                        esRoca = false;     //Detecta que no es roca
+                    }
+                }
+
+            }
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        seconds = 0;
+        seconds = 0;        //reset contador 
+        startScan = false;  //reset la variable para que inicie el scan 
     }
 }

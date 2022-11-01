@@ -5,32 +5,33 @@ using UnityEngine.AI;
 
 public class Base : StateMachineBehaviour
 {
-    private NavMeshAgent agentNavMesh;
-    private Agente agenteScript;
+    private NavMeshAgent agentNavMesh;      //referencia al NavMesh del agente 
+    private Agente agenteScript;            //referencia al script del agente 
 
-    private float originalVelocity = 3.5f;
+    private float originalVelocity = 3.5f;  //velocidad del agente
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();
-        agenteScript = animator.gameObject.GetComponent<Agente>();
+        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();    //referencia al NavMesh del agente
+        agenteScript = animator.gameObject.GetComponent<Agente>();          //referencia al script del agente
 
-        agentNavMesh.speed = 3.5f;
+        agentNavMesh.speed = originalVelocity;      //velocidad del agente
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Vector3.Distance(agentNavMesh.transform.position, agenteScript.baseWaypoint.position) < 0.5f)
+        //IR A BASE
+        if (Vector3.Distance(agentNavMesh.transform.position, agenteScript.baseWaypoint.position) < 0.5f)   //si esta a menos de 0,5 de distancia del waypoint base...
         {
-            agenteScript.inventario = 0;
-            animator.SetBool("timeToBase", false);
-            Debug.Log("llegue a base");
+            animator.GetBehaviour<Collect>().inventario = 0;    //el inventario se resetea 
+            animator.SetBool("timeToBase", false);              //Sale del estado de Base
         }
         else
         {
-            //sino está dentro de esta distancia seguirá su camino hacia el objetivo
-            agentNavMesh.destination = agenteScript.baseWaypoint.position;
+            agentNavMesh.destination = agenteScript.baseWaypoint.position;      //Mientras no esta en el punto se dirige a el 
         }
+
+        MovimientoArena();      //Llamamos al metodo 
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -38,6 +39,7 @@ public class Base : StateMachineBehaviour
         
     }
 
+    //MOVIMIENTO POR LA ARENA
     public void MovimientoArena()       //Método de detección de la arena
     {
         int sandMask = 1 << NavMesh.GetAreaFromName("Sand");                        //Detección del area "Sand"

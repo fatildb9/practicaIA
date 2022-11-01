@@ -99,6 +99,7 @@ MonoBehaviour:
   nextWaypoint: 0
   baseWaypoint: {fileID: 0}
   inventario: 0
+  roverGolpeado: {fileID: 0}
   objetoScaneado: {fileID: 0}
   objetoScaneadoScan: {fileID: 0}
 --- !u!65 &5322838741373133763
