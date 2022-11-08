@@ -110,7 +110,7 @@ public class Scan : StateMachineBehaviour
             Debug.DrawRay(agentNavMesh.transform.position, fwd * 5f, Color.red);
             if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
             {
-                agenteScript.objetoScaneadoScan = hit.transform;    //Guarda el objeto escaneado en una variable 
+                AIDirector.Instance.objetoScaneadoScan = hit.transform;    //Guarda el objeto escaneado en una variable 
 
                 if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")  //Si es Grumpy o Happy entonces...
                 {

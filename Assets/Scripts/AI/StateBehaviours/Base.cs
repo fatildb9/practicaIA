@@ -21,14 +21,14 @@ public class Base : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //IR A BASE
-        if (Vector3.Distance(agentNavMesh.transform.position, agenteScript.baseWaypoint.position) < 0.5f)   //si esta a menos de 0,5 de distancia del waypoint base...
+        if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.baseWaypoint.position) < 0.5f)   //si esta a menos de 0,5 de distancia del waypoint base...
         {
             animator.GetBehaviour<Collect>().inventario = 0;    //el inventario se resetea 
             animator.SetBool("timeToBase", false);              //Sale del estado de Base
         }
         else
         {
-            agentNavMesh.destination = agenteScript.baseWaypoint.position;      //Mientras no esta en el punto se dirige a el 
+            agentNavMesh.destination = AIDirector.Instance.baseWaypoint.position;      //Mientras no esta en el punto se dirige a el 
         }
 
         MovimientoArena();      //Llamamos al metodo 

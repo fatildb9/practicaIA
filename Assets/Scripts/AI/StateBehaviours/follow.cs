@@ -16,7 +16,7 @@ public class follow : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.destination = agenteScript.target.position;    //el agente se mueve al objetivo detectado
+        agentNavMesh.destination = AIDirector.Instance.target.position;    //el agente se mueve al objetivo detectado
 
         //DETECTA LA DISTANCIA
         RaycastHit hit;

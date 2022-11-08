@@ -3526,7 +3526,7 @@ GameObject:
   - component: {fileID: 536504516}
   m_Layer: 0
   m_Name: objetivo_005
-  m_TagString: noScan
+  m_TagString: waypoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4196,7 +4196,7 @@ GameObject:
   - component: {fileID: 624687090}
   m_Layer: 0
   m_Name: objetivo_002
-  m_TagString: noScan
+  m_TagString: waypoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4775,7 +4775,7 @@ GameObject:
   - component: {fileID: 691132589}
   m_Layer: 0
   m_Name: objetivo_001
-  m_TagString: noScan
+  m_TagString: waypoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5035,7 +5035,7 @@ GameObject:
   - component: {fileID: 729788980}
   m_Layer: 0
   m_Name: objetivo
-  m_TagString: noScan
+  m_TagString: waypoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7099,7 +7099,7 @@ GameObject:
   - component: {fileID: 1106459406}
   m_Layer: 0
   m_Name: objetivo_003
-  m_TagString: noScan
+  m_TagString: waypoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7740,7 +7740,7 @@ GameObject:
   - component: {fileID: 1249162895}
   m_Layer: 0
   m_Name: objetivo_004
-  m_TagString: noScan
+  m_TagString: waypoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7888,26 +7888,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5385776893706602881, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
-      propertyPath: baseWaypoint
-      value: 
-      objectReference: {fileID: 729788980}
-    - target: {fileID: 5385776893706602881, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
-      propertyPath: PatrolPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 691132589}
-    - target: {fileID: 5385776893706602881, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
-      propertyPath: PatrolPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 1106459406}
-    - target: {fileID: 5385776893706602881, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
-      propertyPath: PatrolPoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 1249162895}
-    - target: {fileID: 5385776893706602881, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
-      propertyPath: PatrolPoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 729788980}
     - target: {fileID: 6122183576180447149, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
       propertyPath: m_Name
       value: Happy
@@ -9136,26 +9116,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 54503963}
     m_Modifications:
-    - target: {fileID: 1649642520, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: baseWaypoint
-      value: 
-      objectReference: {fileID: 729788980}
-    - target: {fileID: 1649642520, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: PatrolPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 691132589}
-    - target: {fileID: 1649642520, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: PatrolPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 624687090}
-    - target: {fileID: 1649642520, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: PatrolPoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 1106459406}
-    - target: {fileID: 1649642520, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
-      propertyPath: PatrolPoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 1249162895}
     - target: {fileID: 1401451636063552248, guid: c9798dc037595df489ed2f8ebabe34d0, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -10770,34 +10730,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 54503963}
     m_Modifications:
-    - target: {fileID: 225064478021650183, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
-      propertyPath: baseWaypoint
-      value: 
-      objectReference: {fileID: 729788980}
-    - target: {fileID: 225064478021650183, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
-      propertyPath: PatrolPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 691132589}
-    - target: {fileID: 225064478021650183, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
-      propertyPath: PatrolPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 624687090}
-    - target: {fileID: 225064478021650183, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
-      propertyPath: PatrolPoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 1106459406}
-    - target: {fileID: 225064478021650183, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
-      propertyPath: PatrolPoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 1249162895}
-    - target: {fileID: 225064478021650183, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
-      propertyPath: PatrolPoints.Array.data[4]
-      value: 
-      objectReference: {fileID: 536504516}
-    - target: {fileID: 225064478021650183, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
-      propertyPath: PatrolPoints.Array.data[5]
-      value: 
-      objectReference: {fileID: 729788980}
     - target: {fileID: 1401451636063552248, guid: fa0a56cf2ff932e41978e6793410d113, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -10955,6 +10887,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Storm: {fileID: 1938410215}
+  target: {fileID: 0}
+  PatrolPoints: []
+  Rovers: []
+  nextWaypoint: 0
+  baseWaypoint: {fileID: 729788980}
+  objetoScaneado: {fileID: 0}
+  objetoScaneadoScan: {fileID: 0}
 --- !u!4 &1738002231
 Transform:
   m_ObjectHideFlags: 0

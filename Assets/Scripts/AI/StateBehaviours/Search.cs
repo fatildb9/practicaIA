@@ -46,18 +46,18 @@ public class Search : StateMachineBehaviour
         
         if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))       //Si detecta algo a 5 metros...
         {
-            if (agenteScript.objetoScaneado != hit.transform)                                           //Y no es un objeto escaneado previamente
+            if (AIDirector.Instance.objetoScaneado != hit.transform)                                           //Y no es un objeto escaneado previamente
             {   
                 if(hit.transform.tag != "noScan")                                                       //Y no es algo que no pueda escanear...
                 {
                     if (agenteScript.transform.name == "Grumpy" && hit.transform.tag == "Rover")        //Si es grumpy y el objeto escaneado es un rover
                     {
-                        agenteScript.target = hit.transform;                                            //Guardamos la posicion del objeto (rover) en el objetivo
+                        AIDirector.Instance.target = hit.transform;                                            //Guardamos la posicion del objeto (rover) en el objetivo
                         animator.SetBool("timeToFollow", true);                                         //Y pasa al estado de Follow
                     }
                     else
                     {
-                        agenteScript.objetoScaneado = hit.transform;                                    //Guardamos el objeto en una variable 
+                        AIDirector.Instance.objetoScaneado = hit.transform;                                    //Guardamos el objeto en una variable 
                         animator.SetBool("timeToScan", true);                                           //Pasa al estado de Scan
                     }                    
                 }
@@ -92,15 +92,15 @@ public class Search : StateMachineBehaviour
     public void PatrullaAgente()
     {
         //si esta en una distancia del 0,5 de cerca del objetivo...
-        if (Vector3.Distance(agentNavMesh.transform.position, agenteScript.PatrolPoints[agenteScript.nextWaypoint].position) < 0.5f)
+        if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.PatrolPoints[AIDirector.Instance.nextWaypoint].transform.position) < 0.5f)
         {
             //se dirigirá al siguiente objetivo 
-            agenteScript.nextWaypoint = (agenteScript.nextWaypoint + 1) % agenteScript.PatrolPoints.Length;
+            AIDirector.Instance.nextWaypoint = (AIDirector.Instance.nextWaypoint + 1) % AIDirector.Instance.PatrolPoints.Length;
         }
         else
         {
             //sino está dentro de esta distancia seguirá su camino hacia el objetivo
-            agentNavMesh.destination = agenteScript.PatrolPoints[agenteScript.nextWaypoint].position;
+            agentNavMesh.destination = AIDirector.Instance.PatrolPoints[AIDirector.Instance.nextWaypoint].transform.position;
         }
 
     }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1401451636063552248}
   - component: {fileID: 7686008327085588483}
   - component: {fileID: 7960372719507600689}
-  - component: {fileID: 5385776893706602881}
   - component: {fileID: 914368462940330639}
   m_Layer: 0
   m_Name: Happy
@@ -78,29 +77,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5385776893706602881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6122183576180447149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f937d50174c7074a846ff0534976bd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  PatrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  nextWaypoint: 0
-  baseWaypoint: {fileID: 0}
-  roverGolpeado: {fileID: 0}
-  objetoScaneado: {fileID: 0}
-  objetoScaneadoScan: {fileID: 0}
 --- !u!65 &914368462940330639
 BoxCollider:
   m_ObjectHideFlags: 0
