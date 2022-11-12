@@ -9,7 +9,6 @@ public class Scan : StateMachineBehaviour
     public float seconds = 0;               //variable contador de segundos 
 
     private NavMeshAgent agentNavMesh;      //referencia al Nav Mesh del agente
-    private Agente agenteScript;            //referencia al script (contenedor) de agente
 
     private bool esRoca;                    //variable que decide si es una roca
     private bool esPlanta;                  //variable que decide si es una planta
@@ -21,10 +20,12 @@ public class Scan : StateMachineBehaviour
     public Vector3 startAngleRot;           //angulo inicial del agente 
     public Vector3 finishAngleRot;          //angulo final en el que debe terminar
 
+    //public Transform objetoScaneado;        //variable para ver que objeto ha escaneado 
+    public Transform objetoScaneadoScan;    //variable para ver que objeto ha escaneado en el estado de Scan
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
-        agenteScript = animator.gameObject.GetComponent<Agente>();              //referencia al script (contenedor) de agente
 
         seconds = 0;                //reseteo de segundos
         agentNavMesh.speed = 0;     //el agente se para
@@ -76,7 +77,7 @@ public class Scan : StateMachineBehaviour
             //CONTADOR DE SEGUNDOS DE SCAN
             if (seconds >= limitSeconds)            //Si los segundos son iguales o mayores al limite...
             {
-                if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")          //Si es Grumpy o Happy...
+                if (agentNavMesh.transform.name == "Grumpy" || agentNavMesh.transform.name == "Happy")          //Si es Grumpy o Happy...
                 {
                     if (esPlanta == true)                           //Y es planta...
                     {
@@ -87,7 +88,7 @@ public class Scan : StateMachineBehaviour
                         animator.SetBool("timeToScan", false);      //Sino se va del estado de Scan 
                     }
                 }
-                else if (agenteScript.transform.name == "Dopey")    //Si es Dopey...
+                else if (agentNavMesh.transform.name == "Dopey")    //Si es Dopey...
                 {
                     if (esRoca == true)                             //Si es una roca...
                     {
@@ -110,9 +111,9 @@ public class Scan : StateMachineBehaviour
             Debug.DrawRay(agentNavMesh.transform.position, fwd * 5f, Color.red);
             if (Physics.Raycast(agentNavMesh.transform.position, fwd, out hit, 5f))
             {
-                AIDirector.Instance.objetoScaneadoScan = hit.transform;    //Guarda el objeto escaneado en una variable 
+                objetoScaneadoScan = hit.transform;    //Guarda el objeto escaneado en una variable 
 
-                if (agenteScript.transform.name == "Grumpy" || agenteScript.transform.name == "Happy")  //Si es Grumpy o Happy entonces...
+                if (agentNavMesh.transform.name == "Grumpy" || agentNavMesh.transform.name == "Happy")  //Si es Grumpy o Happy entonces...
                 {
                     if (hit.transform.tag == ("Planta"))        //Si contra lo que choca es una planta...
                     {
@@ -125,7 +126,7 @@ public class Scan : StateMachineBehaviour
                         esRoca = false;     //Detecta que no es roca
                     }
                 }
-                else if (agenteScript.transform.name == "Dopey")    //Si es Dopey...
+                else if (agentNavMesh.transform.name == "Dopey")    //Si es Dopey...
                 {
                     if (hit.transform.tag == ("Rock"))  //Si contra lo que choca es una roca...
                     {

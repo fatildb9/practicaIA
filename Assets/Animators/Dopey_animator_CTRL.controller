@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad9a9bbabe04fd4f9d39cc5bcdf98a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseWaypoint: {fileID: 4606139392947125212, guid: fe1d511443b9d34419d137dd4e59b1d8, type: 3}
 --- !u!114 &-8702415436417476914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,6 +93,7 @@ MonoBehaviour:
   seconds: 0
   startAngleRot: {x: 0, y: 0, z: 0}
   finishAngleRot: {x: 0, y: 0, z: 0}
+  objetoScaneadoScan: {fileID: 0}
 --- !u!1101 &-6069518976961075669
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -623,6 +625,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limitSeconds: 30
   seconds: 0
+  nextWaypoint: 0
+  objetoScaneado: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1102 &5384247864350575678
 AnimatorState:
   serializedVersion: 6

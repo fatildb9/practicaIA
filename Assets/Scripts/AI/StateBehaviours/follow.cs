@@ -5,18 +5,17 @@ using UnityEngine.AI;
 
 public class follow : StateMachineBehaviour
 {
-    private Agente agenteScript;        //referencia al script de agente
     private NavMeshAgent agentNavMesh;  //referencia al nav mesh del agente 
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agenteScript = animator.gameObject.GetComponent<Agente>();          //referencia al script de agente
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();    //referencia al nav mesh del agente
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.destination = AIDirector.Instance.target.position;    //el agente se mueve al objetivo detectado
+        //agentNavMesh.destination = target.position;    //el agente se mueve al objetivo detectado
+        agentNavMesh.destination = animator.GetBehaviour<Search>().target.position;    //el agente se mueve al objetivo detectado
 
         //DETECTA LA DISTANCIA
         RaycastHit hit;

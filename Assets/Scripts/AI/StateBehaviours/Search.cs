@@ -7,17 +7,20 @@ using UnityEngine.TextCore.Text;
 public class Search : StateMachineBehaviour
 {
     private NavMeshAgent agentNavMesh;      //referencia al Nav Mesh del agente 
-    private Agente agenteScript;            //referencia al script (contenedor) de agente
 
     public float limitSeconds = 30f;        //limite de segundos que está en este estado
     public float seconds = 0;               //variable contador de segundos
 
     float originalVelocity = 3.5f;          //Variable de la velocidad original del agente
 
+    public int nextWaypoint = 0;        //Número de array por el que va el agente
+
+    public Transform objetoScaneado;        //variable para ver que objeto ha escaneado 
+    public Transform target;            //variable para seguir el objetivo
+
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
-        agenteScript = animator.gameObject.GetComponent<Agente>();              //referencia al script (contenedor) de agente
+        agentNavMesh = animator.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
         
         seconds = 0;                                                            //comenzamos con 0 segundos
         originalVelocity = 3.5f;                                                //velocidad inicial del agente
@@ -46,18 +49,19 @@ public class Search : StateMachineBehaviour
         
         if (Physics.Raycast(agentNavMesh.transform.position, fwd , out hit , 5f))       //Si detecta algo a 5 metros...
         {
-            if (AIDirector.Instance.objetoScaneado != hit.transform)                                           //Y no es un objeto escaneado previamente
+            if (objetoScaneado != hit.transform)                                           //Y no es un objeto escaneado previamente
             {   
                 if(hit.transform.tag != "noScan")                                                       //Y no es algo que no pueda escanear...
                 {
-                    if (agenteScript.transform.name == "Grumpy" && hit.transform.tag == "Rover")        //Si es grumpy y el objeto escaneado es un rover
+                    //if (agenteScript.transform.name == "Grumpy" && hit.transform.tag == "Rover")        //Si es grumpy y el objeto escaneado es un rover
+                    if (agentNavMesh.transform.name == "Grumpy" && hit.transform.tag == "Rover")        //Si es grumpy y el objeto escaneado es un rover
                     {
-                        AIDirector.Instance.target = hit.transform;                                            //Guardamos la posicion del objeto (rover) en el objetivo
+                        target = hit.transform;                                            //Guardamos la posicion del objeto (rover) en el objetivo
                         animator.SetBool("timeToFollow", true);                                         //Y pasa al estado de Follow
                     }
                     else
                     {
-                        AIDirector.Instance.objetoScaneado = hit.transform;                                    //Guardamos el objeto en una variable 
+                        objetoScaneado = hit.transform;                                    //Guardamos el objeto en una variable 
                         animator.SetBool("timeToScan", true);                                           //Pasa al estado de Scan
                     }                    
                 }
@@ -75,7 +79,7 @@ public class Search : StateMachineBehaviour
     {
         int sandMask = 1 << NavMesh.GetAreaFromName("Sand");                                //Detección del area "Sand"
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(agenteScript.transform.position, out hit, 0.2f, sandMask))    //Si la posición está tocando el area "Sand"...
+        if (NavMesh.SamplePosition(agentNavMesh.transform.position, out hit, 0.2f, sandMask))    //Si la posición está tocando el area "Sand"...
         {
             if (agentNavMesh.speed == originalVelocity)                                         //Y si su velocidad es original e igual a la guardada previamente en el start...
             {
@@ -92,15 +96,17 @@ public class Search : StateMachineBehaviour
     public void PatrullaAgente()
     {
         //si esta en una distancia del 0,5 de cerca del objetivo...
-        if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.PatrolPoints[AIDirector.Instance.nextWaypoint].transform.position) < 0.5f)
+        //if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.PatrolPoints[AIDirector.Instance.nextWaypoint].transform.position) < 0.5f)
+        if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.PatrolPoints[nextWaypoint].transform.position) < 0.5f)
         {
             //se dirigirá al siguiente objetivo 
-            AIDirector.Instance.nextWaypoint = (AIDirector.Instance.nextWaypoint + 1) % AIDirector.Instance.PatrolPoints.Length;
+            //AIDirector.Instance.nextWaypoint = (AIDirector.Instance.nextWaypoint + 1) % AIDirector.Instance.PatrolPoints.Length;
+            nextWaypoint = (nextWaypoint + 1) % AIDirector.Instance.PatrolPoints.Length;
         }
         else
         {
             //sino está dentro de esta distancia seguirá su camino hacia el objetivo
-            agentNavMesh.destination = AIDirector.Instance.PatrolPoints[AIDirector.Instance.nextWaypoint].transform.position;
+            agentNavMesh.destination = AIDirector.Instance.PatrolPoints[nextWaypoint].transform.position;
         }
 
     }

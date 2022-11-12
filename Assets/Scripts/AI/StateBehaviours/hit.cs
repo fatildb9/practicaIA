@@ -22,7 +22,7 @@ public class hit : StateMachineBehaviour
         {
             if (hit.transform.tag == "Rover")       //Y es un rover...
             {                
-                animator.GetBehaviour<Collect>().inventario = hit.transform.GetComponent<Animator>().GetBehaviour<Collect>().inventario;    //Asociamos su inventario al nuestro 
+                animator.GetBehaviour<Collect>().inventario = hit.transform.GetComponent<Animator>().GetBehaviour<Collect>().inventario + animator.GetBehaviour<Collect>().inventario;    //Asociamos su inventario al nuestro 
                 hit.transform.GetComponent<Animator>().GetBehaviour<Collect>().inventario = 0;  //al rover golpeado le reseteamos el inventario 
                 hit.transform.GetComponent<Animator>().SetTrigger("timeToStunned");             //Activamos el trigger de stunned del rover golpeado
                 
