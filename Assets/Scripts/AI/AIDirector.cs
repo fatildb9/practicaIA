@@ -32,6 +32,17 @@ public class AIDirector : MonoBehaviour
     private void Start()
     {
         PatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
+
+        /*for (int i = 0; i < PatrolPoints.Length; i++)
+        {
+            int value = PatrolPoints[i];
+            if (value > maxInt)
+            {
+                maxInt = value;
+                maxIndex = i;
+            }
+        }*/
+
         Rovers = GameObject.FindGameObjectsWithTag("Rover"); 
     }
     
