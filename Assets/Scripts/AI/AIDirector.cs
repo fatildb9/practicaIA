@@ -25,28 +25,30 @@ public class AIDirector : MonoBehaviour
     //ARENA
     public GameObject Storm;
 
-    public GameObject[] PatrolPoints;    //Array de puntos de patrulla
-    public GameObject[] Rovers;    //Array de puntos de patrulla
-    public Transform baseWaypoint;      //Punto para ir a la base 
+    //public List<GameObject> PatrolPoints = new List<GameObject>();
+    public GameObject[] TotalPatrolPoints;      //Array de todos los puntos del Mapa
+    public GameObject[] PatrolPoints;      //Array de todos los puntos del Mapa
+
+    public GameObject[] Rovers;                 //Array de puntos de patrulla
+    public Transform baseWaypoint;              //Punto para ir a la base 
 
     private void Start()
     {
-        PatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
-
-        /*for (int i = 0; i < PatrolPoints.Length; i++)
-        {
-            int value = PatrolPoints[i];
-            if (value > maxInt)
-            {
-                maxInt = value;
-                maxIndex = i;
-            }
-        }*/
-
-        Rovers = GameObject.FindGameObjectsWithTag("Rover"); 
+        //PatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
+        TotalPatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
+        Rovers = GameObject.FindGameObjectsWithTag("Rover");
     }
     
+    public GameObject[] AddWaypoint()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            int randomPoints = Random.Range(0, TotalPatrolPoints.Length);
+            PatrolPoints[i] = TotalPatrolPoints[randomPoints]; 
+        }
 
+        return PatrolPoints;
+    }
 
     //ARENA
     private void StartStorm()

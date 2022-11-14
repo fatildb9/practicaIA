@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.TextCore.Text;
@@ -18,8 +20,15 @@ public class Search : StateMachineBehaviour
     public Transform objetoScaneado;        //variable para ver que objeto ha escaneado 
     public Transform target;            //variable para seguir el objetivo
 
+    public GameObject[] PatrolPoints;
+
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (PatrolPoints == null)
+        {
+            PatrolPoints = AIDirector.Instance.AddWaypoint();
+        }
+
         agentNavMesh = animator.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
         
         seconds = 0;                                                            //comenzamos con 0 segundos
@@ -97,16 +106,16 @@ public class Search : StateMachineBehaviour
     {
         //si esta en una distancia del 0,5 de cerca del objetivo...
         //if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.PatrolPoints[AIDirector.Instance.nextWaypoint].transform.position) < 0.5f)
-        if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.PatrolPoints[nextWaypoint].transform.position) < 0.5f)
+        if (Vector3.Distance(agentNavMesh.transform.position, PatrolPoints[nextWaypoint].transform.position) < 0.5f)
         {
             //se dirigirá al siguiente objetivo 
             //AIDirector.Instance.nextWaypoint = (AIDirector.Instance.nextWaypoint + 1) % AIDirector.Instance.PatrolPoints.Length;
-            nextWaypoint = (nextWaypoint + 1) % AIDirector.Instance.PatrolPoints.Length;
+            nextWaypoint = (nextWaypoint + 1) % PatrolPoints.Length;
         }
         else
         {
             //sino está dentro de esta distancia seguirá su camino hacia el objetivo
-            agentNavMesh.destination = AIDirector.Instance.PatrolPoints[nextWaypoint].transform.position;
+            agentNavMesh.destination = PatrolPoints[nextWaypoint].transform.position;
         }
 
     }
