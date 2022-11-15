@@ -23,29 +23,50 @@ public class AIDirector : MonoBehaviour
         DontDestroyOnLoad(gameObject);  //Sets this to not be destroyed when reloding scene  
     }
 
+
+
     //ARENA
     public GameObject Storm;
 
-    //public List<GameObject> PatrolPoints = new List<GameObject>();
     public GameObject[] TotalPatrolPoints;      //Array de todos los puntos del Mapa
-    public GameObject[] PatrolPoints;      //Array de todos los puntos del Mapa
 
     public GameObject[] Rovers;                 //Array de puntos de patrulla
     public Transform baseWaypoint;              //Punto para ir a la base 
 
+    public bool tormentaActivar; 
+
     private void Start()
     {
-        //PatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
         TotalPatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
         Rovers = GameObject.FindGameObjectsWithTag("Rover");
     }
 
+    private void Update()
+    {
+        StartCoroutine(StormFunctionality());
+        StartCoroutine(PararStorm());
+
+        /*if (tormentaActivar == true)
+        {
+            StartCoroutine(StormFunctionality());
+        }*/
+    }
+
+    //METODO LISTA DE WAYPOINTS
     public GameObject[] AddWaypoint()
     {
-        for (int i = 0; i < 6; i++)
+        GameObject[] PatrolPoints = new GameObject[6];      //Array de todos los puntos del Mapa
+        int numeroRepetido = 0;
+
+        for (int i = 0; i < PatrolPoints.Length; i++)
         {
             int randomPoints = Random.Range(0, TotalPatrolPoints.Length);
-            PatrolPoints[i] = TotalPatrolPoints[randomPoints]; 
+
+            if (numeroRepetido != randomPoints)
+            {
+                numeroRepetido = randomPoints;
+                PatrolPoints[i] = TotalPatrolPoints[randomPoints];
+            }
         }
 
         return PatrolPoints;
@@ -56,9 +77,22 @@ public class AIDirector : MonoBehaviour
     {
         Storm.SetActive(true);
     }
-
     private void StopStorm()
     {
         Storm.SetActive(false);
+    }
+
+    IEnumerator StormFunctionality()
+    {
+        int tiempoComienzo = Random.Range(45, 61);
+        StartStorm();
+        yield return new WaitForSeconds(5);
+    }
+
+    IEnumerator PararStorm()
+    {
+        int timpoTerminar = Random.Range(15, 31);
+        StopStorm();
+        yield return new WaitForSeconds(4);
     }
 }

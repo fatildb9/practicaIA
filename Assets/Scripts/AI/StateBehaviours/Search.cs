@@ -25,10 +25,12 @@ public class Search : StateMachineBehaviour
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PatrolPoints.Length < 6)
+        PatrolPoints = AIDirector.Instance.AddWaypoint();
+
+        /*if (PatrolPoints.Length < 6)
         {
-            PatrolPoints = AIDirector.Instance.AddWaypoint();
-        }
+            
+        }*/
 
         agentNavMesh = animator.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
         
@@ -106,7 +108,6 @@ public class Search : StateMachineBehaviour
     public void PatrullaAgente()
     {
         //si esta en una distancia del 0,5 de cerca del objetivo...
-        //if (Vector3.Distance(agentNavMesh.transform.position, AIDirector.Instance.PatrolPoints[AIDirector.Instance.nextWaypoint].transform.position) < 0.5f)
         if (Vector3.Distance(agentNavMesh.transform.position, PatrolPoints[nextWaypoint].transform.position) < 0.5f)
         {
             //se dirigirá al siguiente objetivo 

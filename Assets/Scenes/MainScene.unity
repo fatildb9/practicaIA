@@ -10888,15 +10888,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Storm: {fileID: 1938410215}
   TotalPatrolPoints: []
-  PatrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   Rovers: []
   baseWaypoint: {fileID: 59669819}
+  tormentaActivar: 0
 --- !u!4 &1738002231
 Transform:
   m_ObjectHideFlags: 0
