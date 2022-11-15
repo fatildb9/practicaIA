@@ -21,10 +21,11 @@ public class Search : StateMachineBehaviour
     public Transform target;            //variable para seguir el objetivo
 
     public GameObject[] PatrolPoints;
+    //public List<GameObject> PatrolPoints = new List<GameObject>();
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (PatrolPoints == null)
+        if (PatrolPoints.Length < 6)
         {
             PatrolPoints = AIDirector.Instance.AddWaypoint();
         }
@@ -109,7 +110,6 @@ public class Search : StateMachineBehaviour
         if (Vector3.Distance(agentNavMesh.transform.position, PatrolPoints[nextWaypoint].transform.position) < 0.5f)
         {
             //se dirigirá al siguiente objetivo 
-            //AIDirector.Instance.nextWaypoint = (AIDirector.Instance.nextWaypoint + 1) % AIDirector.Instance.PatrolPoints.Length;
             nextWaypoint = (nextWaypoint + 1) % PatrolPoints.Length;
         }
         else
@@ -117,6 +117,5 @@ public class Search : StateMachineBehaviour
             //sino está dentro de esta distancia seguirá su camino hacia el objetivo
             agentNavMesh.destination = PatrolPoints[nextWaypoint].transform.position;
         }
-
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AIDirector : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class AIDirector : MonoBehaviour
         TotalPatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
         Rovers = GameObject.FindGameObjectsWithTag("Rover");
     }
-    
+
     public GameObject[] AddWaypoint()
     {
         for (int i = 0; i < 6; i++)

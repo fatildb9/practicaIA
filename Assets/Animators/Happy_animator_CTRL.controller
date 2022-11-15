@@ -541,13 +541,7 @@ MonoBehaviour:
   nextWaypoint: 0
   objetoScaneado: {fileID: 0}
   target: {fileID: 0}
-  PatrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PatrolPoints: []
 --- !u!1101 &5715708211035054107
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

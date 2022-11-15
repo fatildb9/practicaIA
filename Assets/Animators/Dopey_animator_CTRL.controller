@@ -627,13 +627,7 @@ MonoBehaviour:
   nextWaypoint: 0
   objetoScaneado: {fileID: 0}
   target: {fileID: 0}
-  PatrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PatrolPoints: []
 --- !u!1102 &5384247864350575678
 AnimatorState:
   serializedVersion: 6
