@@ -7850,7 +7850,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1401451636063552248, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.96
+      value: 23.6
       objectReference: {fileID: 0}
     - target: {fileID: 1401451636063552248, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7858,7 +7858,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1401451636063552248, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35.88
+      value: 3.7
       objectReference: {fileID: 0}
     - target: {fileID: 1401451636063552248, guid: 0bc96a1542116644d8861876456dc0e6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10890,7 +10890,11 @@ MonoBehaviour:
   TotalPatrolPoints: []
   Rovers: []
   baseWaypoint: {fileID: 59669819}
-  tormentaActivar: 0
+  tiempoEnLlegar: 0
+  tiempoDeDuracion: 0
+  tiempoEnAlarmar: 0
+  seconds: 0
+  alarm: 1
 --- !u!4 &1738002231
 Transform:
   m_ObjectHideFlags: 0

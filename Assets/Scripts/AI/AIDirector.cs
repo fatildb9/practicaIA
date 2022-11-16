@@ -36,27 +36,29 @@ public class AIDirector : MonoBehaviour
     public float tiempoEnLlegar;
     public float tiempoDeDuracion;
     public float tiempoEnAlarmar;
-    public float seconds; 
+
+    public float seconds;
+    public bool alarm = true;
 
     private void Start()
     {
         TotalPatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
         Rovers = GameObject.FindGameObjectsWithTag("Rover");
 
-        //StartCoroutine(Alarma());    
-        StartCoroutine(TormentaArena());    
+        StartCoroutine(TormentaArena());    //Comienza la tormenta de arena
     }
 
     private void Update()
     {
-        if (seconds >= (tiempoEnLlegar - tiempoEnAlarmar))                    //Si los segundos son mayores que el limite...
+        //CONTADOR de segundos para alarmar
+        if (seconds >= (tiempoEnLlegar - tiempoEnAlarmar) && alarm == true)                    
         {
-            //animator true alarm
-            Debug.Log("Doy la alarma");
+            Alarm();            //Llamamos al método alarm
+            alarm = false;      //Booleano para que solo se realice una vez
         }
         else
         {
-            seconds = seconds + 1 * Time.deltaTime;     //Mientras va contando los segundos
+            seconds = seconds + 1 * Time.deltaTime;     
         }
     }
 
@@ -91,7 +93,36 @@ public class AIDirector : MonoBehaviour
         return PatrolPoints;
     }
 
-    //ARENA
+
+    //METODO ALARM
+    public void Alarm()
+    {
+        Debug.Log("Doy la alarma");
+        for (int i = 0; i < Rovers.Length; i++)     //Pasa por cada uno de los rovers del array
+        {
+            Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToAlarm");         //se pasa al estado de alarm
+
+            //desactiva cualquier bool que pudiese estar 
+            Rovers[i].transform.GetComponent<Animator>().SetBool("timeToScan", false);
+            Rovers[i].transform.GetComponent<Animator>().SetBool("timeToCharge", false);
+            Rovers[i].transform.GetComponent<Animator>().SetBool("timeToCollect", false);
+            Rovers[i].transform.GetComponent<Animator>().SetBool("timeToBase", false);
+        }
+    }
+
+    //METODO PARA VOLVER A SEARCH TRAS WAITING
+    public void SearchAgain()
+    {
+        Debug.Log("Voy a search ");
+        for (int i = 0; i < Rovers.Length; i++)         //Pasa por cada uno de los rovers del array 
+        {
+            Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToSearch");        //cambia al estado de Search 
+        }
+    }
+
+    
+
+    //ARENA INICIO Y FINAL 
     private void StartStorm()
     {
         Storm.SetActive(true);
@@ -101,55 +132,40 @@ public class AIDirector : MonoBehaviour
         Storm.SetActive(false);
     }
 
-    /*private IEnumerator Alarma()
+    //METODO QUITAR INVENTARIO
+    public void QuitarInventario()
     {
-        tiempoEnLlegar = Random.Range(45, 60);
-        tiempoDeDuracion = Random.Range(15, 30);
-        tiempoEnAlarmar = Random.Range(5, 10);
-
-        yield return new WaitForSeconds(tiempoEnAlarmar);
-        StartCoroutine(TormentaArena());
-        Debug.Log("Alarma");
-    }
-    private IEnumerator TormentaArena()
-    {
-        Debug.Log("Entre");
-        while (true)
+        for (int i = 0; i < Rovers.Length; i++)     //Pasa por cada uno de los rovers
         {
-            StopStorm();
-            yield return new WaitForSeconds(tiempoEnLlegar);
-            StartStorm();
-            yield return new WaitForSeconds(tiempoDeDuracion);
+            int baseMask = 1 << NavMesh.GetAreaFromName("Base");                        //Detección del area "Base"
+            NavMeshHit hit;
+            if (!NavMesh.SamplePosition(Rovers[i].transform.position, out hit, 0.2f, baseMask))    //Si la posición está tocando el area "Base"...
+            {
+                Rovers[i].transform.GetComponent<Animator>().GetBehaviour<Collect>().inventario = 0;    //Pone su inventario a 0 
+            }
         }
     }
-     */
 
-    /*private IEnumerator Alarma()
-    {
-        tiempoEnLlegar = Random.Range(45, 60);
-        tiempoDeDuracion = Random.Range(15, 30);
-        tiempoEnAlarmar = Random.Range(5, 10);
-
-        yield return new WaitForSeconds(tiempoEnAlarmar);
-        StartCoroutine(TormentaArena());
-        Debug.Log("Alarma");
-    }*/
-
+    //TORMENTA
     private IEnumerator TormentaArena()
     {
-        tiempoEnLlegar = Random.Range(45, 60);
-        tiempoDeDuracion = Random.Range(15, 30);
-        tiempoEnAlarmar = Random.Range(5, 10);
+        tiempoEnLlegar = Random.Range(45, 60);      //Detecta el tiempo que tarda en llegar
+        tiempoDeDuracion = Random.Range(15, 30);    //Detecta el tiempo que dura la tormenta 
+        tiempoEnAlarmar = Random.Range(20, 30);     //Detecta el tiempo que tardará en alarmar
 
         Debug.Log("Entre");
         while (true)
         {
-            StopStorm();
-            yield return new WaitForSeconds(tiempoEnLlegar);
-            
-            
-            StartStorm();
-            yield return new WaitForSeconds(tiempoDeDuracion);
+            StopStorm();            //La tormenta para 
+            yield return new WaitForSeconds(tiempoEnLlegar);    //espera tiempo en llegar
+
+            QuitarInventario();     //Termina el tiempo y comprueba si esta en la base y quita el inventario 
+            StartStorm();           //La tormenta comienza
+            yield return new WaitForSeconds(tiempoDeDuracion);  //la tormenta dura 
+
+            SearchAgain();          //Pasa a search de nuevo 
+            seconds = 0;            //se resetea el tiempo 
+            alarm = true;           //Se resetea el bool de alarma
         }
     }
 }
