@@ -33,40 +33,59 @@ public class AIDirector : MonoBehaviour
     public GameObject[] Rovers;                 //Array de puntos de patrulla
     public Transform baseWaypoint;              //Punto para ir a la base 
 
-    public bool tormentaActivar; 
+    public float tiempoEnLlegar;
+    public float tiempoDeDuracion;
+    public float tiempoEnAlarmar;
+    public float seconds; 
 
     private void Start()
     {
         TotalPatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
         Rovers = GameObject.FindGameObjectsWithTag("Rover");
+
+        //StartCoroutine(Alarma());    
+        StartCoroutine(TormentaArena());    
     }
 
     private void Update()
     {
-        StartCoroutine(StormFunctionality());
-        StartCoroutine(PararStorm());
-
-        /*if (tormentaActivar == true)
+        if (seconds >= (tiempoEnLlegar - tiempoEnAlarmar))                    //Si los segundos son mayores que el limite...
         {
-            StartCoroutine(StormFunctionality());
-        }*/
+            //animator true alarm
+            Debug.Log("Doy la alarma");
+        }
+        else
+        {
+            seconds = seconds + 1 * Time.deltaTime;     //Mientras va contando los segundos
+        }
     }
 
     //METODO LISTA DE WAYPOINTS
+    /*public GameObject[] AddWaypoint()
+    {
+        GameObject[] PatrolPoints = new GameObject[6];      //Array de todos los puntos del Mapa
+        int numeroRepetido = 9;
+
+        for (int i = 0; i < PatrolPoints.Length; i++)
+        {
+            for (int randomPoints = 0; randomPoints != numeroRepetido; randomPoints = Random.Range(0, TotalPatrolPoints.Length + 1))
+            {
+                PatrolPoints[i] = TotalPatrolPoints[randomPoints];
+            }
+    
+        }
+
+        return PatrolPoints;
+    }*/
+
     public GameObject[] AddWaypoint()
     {
         GameObject[] PatrolPoints = new GameObject[6];      //Array de todos los puntos del Mapa
-        int numeroRepetido = 0;
 
         for (int i = 0; i < PatrolPoints.Length; i++)
         {
             int randomPoints = Random.Range(0, TotalPatrolPoints.Length);
-
-            if (numeroRepetido != randomPoints)
-            {
-                numeroRepetido = randomPoints;
-                PatrolPoints[i] = TotalPatrolPoints[randomPoints];
-            }
+            PatrolPoints[i] = TotalPatrolPoints[randomPoints];
         }
 
         return PatrolPoints;
@@ -82,17 +101,55 @@ public class AIDirector : MonoBehaviour
         Storm.SetActive(false);
     }
 
-    IEnumerator StormFunctionality()
+    /*private IEnumerator Alarma()
     {
-        int tiempoComienzo = Random.Range(45, 61);
-        StartStorm();
-        yield return new WaitForSeconds(5);
-    }
+        tiempoEnLlegar = Random.Range(45, 60);
+        tiempoDeDuracion = Random.Range(15, 30);
+        tiempoEnAlarmar = Random.Range(5, 10);
 
-    IEnumerator PararStorm()
+        yield return new WaitForSeconds(tiempoEnAlarmar);
+        StartCoroutine(TormentaArena());
+        Debug.Log("Alarma");
+    }
+    private IEnumerator TormentaArena()
     {
-        int timpoTerminar = Random.Range(15, 31);
-        StopStorm();
-        yield return new WaitForSeconds(4);
+        Debug.Log("Entre");
+        while (true)
+        {
+            StopStorm();
+            yield return new WaitForSeconds(tiempoEnLlegar);
+            StartStorm();
+            yield return new WaitForSeconds(tiempoDeDuracion);
+        }
+    }
+     */
+
+    /*private IEnumerator Alarma()
+    {
+        tiempoEnLlegar = Random.Range(45, 60);
+        tiempoDeDuracion = Random.Range(15, 30);
+        tiempoEnAlarmar = Random.Range(5, 10);
+
+        yield return new WaitForSeconds(tiempoEnAlarmar);
+        StartCoroutine(TormentaArena());
+        Debug.Log("Alarma");
+    }*/
+
+    private IEnumerator TormentaArena()
+    {
+        tiempoEnLlegar = Random.Range(45, 60);
+        tiempoDeDuracion = Random.Range(15, 30);
+        tiempoEnAlarmar = Random.Range(5, 10);
+
+        Debug.Log("Entre");
+        while (true)
+        {
+            StopStorm();
+            yield return new WaitForSeconds(tiempoEnLlegar);
+            
+            
+            StartStorm();
+            yield return new WaitForSeconds(tiempoDeDuracion);
+        }
     }
 }

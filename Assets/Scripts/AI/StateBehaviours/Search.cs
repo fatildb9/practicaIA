@@ -27,11 +27,6 @@ public class Search : StateMachineBehaviour
     {
         PatrolPoints = AIDirector.Instance.AddWaypoint();
 
-        /*if (PatrolPoints.Length < 6)
-        {
-            
-        }*/
-
         agentNavMesh = animator.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
         
         seconds = 0;                                                            //comenzamos con 0 segundos
