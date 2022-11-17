@@ -39,6 +39,7 @@ public class AIDirector : MonoBehaviour
 
     public float seconds;
     public bool alarm = true;
+    public bool wait = true;
 
     private void Start()
     {
@@ -56,10 +57,16 @@ public class AIDirector : MonoBehaviour
             Alarm();            //Llamamos al método alarm
             alarm = false;      //Booleano para que solo se realice una vez
         }
+        else if (seconds >= tiempoEnLlegar && wait == true)
+        {
+            TimeToWait();
+            wait = false;
+        }
         else
         {
             seconds = seconds + 1 * Time.deltaTime;     
         }
+        
     }
 
     //METODO LISTA DE WAYPOINTS
@@ -120,7 +127,15 @@ public class AIDirector : MonoBehaviour
         }
     }
 
-    
+    //METODO PARA IR A WAITING
+    public void TimeToWait()
+    {
+        Debug.Log("Voy a wait");
+        for (int i = 0; i < Rovers.Length; i++)         //Pasa por cada uno de los rovers del array 
+        {
+            Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToWait");        //cambia al estado de Search 
+        }
+    }
 
     //ARENA INICIO Y FINAL 
     private void StartStorm()
@@ -132,7 +147,8 @@ public class AIDirector : MonoBehaviour
         Storm.SetActive(false);
     }
 
-    //METODO QUITAR INVENTARIO
+    
+    /*//METODO QUITAR INVENTARIO
     public void QuitarInventario()
     {
         for (int i = 0; i < Rovers.Length; i++)     //Pasa por cada uno de los rovers
@@ -144,7 +160,7 @@ public class AIDirector : MonoBehaviour
                 Rovers[i].transform.GetComponent<Animator>().GetBehaviour<Collect>().inventario = 0;    //Pone su inventario a 0 
             }
         }
-    }
+    }*/
 
     //TORMENTA
     private IEnumerator TormentaArena()
@@ -159,13 +175,14 @@ public class AIDirector : MonoBehaviour
             StopStorm();            //La tormenta para 
             yield return new WaitForSeconds(tiempoEnLlegar);    //espera tiempo en llegar
 
-            QuitarInventario();     //Termina el tiempo y comprueba si esta en la base y quita el inventario 
+            //QuitarInventario();     //Termina el tiempo y comprueba si esta en la base y quita el inventario 
             StartStorm();           //La tormenta comienza
             yield return new WaitForSeconds(tiempoDeDuracion);  //la tormenta dura 
 
             SearchAgain();          //Pasa a search de nuevo 
             seconds = 0;            //se resetea el tiempo 
             alarm = true;           //Se resetea el bool de alarma
+            wait = true;           //Se resetea el bool de alarma
         }
     }
 }
