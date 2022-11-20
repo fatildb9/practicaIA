@@ -57,11 +57,6 @@ public class AIDirector : MonoBehaviour
             Alarm();            //Llamamos al método alarm
             alarm = false;      //Booleano para que solo se realice una vez
         }
-        else if (seconds >= tiempoEnLlegar && wait == true)
-        {
-            TimeToWait();
-            wait = false;
-        }
         else
         {
             seconds = seconds + 1 * Time.deltaTime;     
@@ -77,11 +72,17 @@ public class AIDirector : MonoBehaviour
 
         for (int i = 0; i < PatrolPoints.Length; i++)
         {
-            for (int randomPoints = 0; randomPoints != numeroRepetido; randomPoints = Random.Range(0, TotalPatrolPoints.Length + 1))
+            for (int j = 0; j < PatrolPoints.Length; j++)
             {
+
+            }
+
+            for (int j = 0; j != numeroRepetido; j = Random.Range(0, TotalPatrolPoints.Length))
+            {
+                Debug.Log(randomPoints);
+                numeroRepetido = randomPoints;
                 PatrolPoints[i] = TotalPatrolPoints[randomPoints];
             }
-    
         }
 
         return PatrolPoints;
@@ -127,16 +128,6 @@ public class AIDirector : MonoBehaviour
         }
     }
 
-    //METODO PARA IR A WAITING
-    public void TimeToWait()
-    {
-        Debug.Log("Voy a wait");
-        for (int i = 0; i < Rovers.Length; i++)         //Pasa por cada uno de los rovers del array 
-        {
-            Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToWait");        //cambia al estado de Search 
-        }
-    }
-
     //ARENA INICIO Y FINAL 
     private void StartStorm()
     {
@@ -146,10 +137,9 @@ public class AIDirector : MonoBehaviour
     {
         Storm.SetActive(false);
     }
-
     
-    /*//METODO QUITAR INVENTARIO
-    public void QuitarInventario()
+    //METODO QUITAR INVENTARIO
+    public void ComprobarInventario()
     {
         for (int i = 0; i < Rovers.Length; i++)     //Pasa por cada uno de los rovers
         {
@@ -157,10 +147,12 @@ public class AIDirector : MonoBehaviour
             NavMeshHit hit;
             if (!NavMesh.SamplePosition(Rovers[i].transform.position, out hit, 0.2f, baseMask))    //Si la posición está tocando el area "Base"...
             {
-                Rovers[i].transform.GetComponent<Animator>().GetBehaviour<Collect>().inventario = 0;    //Pone su inventario a 0 
+                Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToWait");        //cambia al estado de Search 
+                Debug.Log("una vez");
+                Rovers[i].transform.GetComponent<Animator>().GetBehaviour<Waiting>().QuitarInventario(Rovers[i].transform.GetComponent<Animator>());    //Pone su inventario a 0 
             }
         }
-    }*/
+    }
 
     //TORMENTA
     private IEnumerator TormentaArena()
@@ -175,7 +167,7 @@ public class AIDirector : MonoBehaviour
             StopStorm();            //La tormenta para 
             yield return new WaitForSeconds(tiempoEnLlegar);    //espera tiempo en llegar
 
-            //QuitarInventario();     //Termina el tiempo y comprueba si esta en la base y quita el inventario 
+            ComprobarInventario();     //Termina el tiempo y comprueba si esta en la base y quita el inventario 
             StartStorm();           //La tormenta comienza
             yield return new WaitForSeconds(tiempoDeDuracion);  //la tormenta dura 
 

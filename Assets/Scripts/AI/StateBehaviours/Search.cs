@@ -25,7 +25,11 @@ public class Search : StateMachineBehaviour
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PatrolPoints = AIDirector.Instance.AddWaypoint();
+        if (PatrolPoints.Length == 0)
+        {
+            PatrolPoints = AIDirector.Instance.AddWaypoint();
+        }
+
 
         agentNavMesh = animator.GetComponent<NavMeshAgent>();        //referencia al Nav Mesh del agente
         
