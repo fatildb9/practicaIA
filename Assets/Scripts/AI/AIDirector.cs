@@ -65,30 +65,34 @@ public class AIDirector : MonoBehaviour
     }
 
     //METODO LISTA DE WAYPOINTS
-    /*public GameObject[] AddWaypoint()
+    public GameObject[] AddWaypoint()
     {
         GameObject[] PatrolPoints = new GameObject[6];      //Array de todos los puntos del Mapa
-        int numeroRepetido = 9;
+        int numeroRepetido = 0;
 
-        for (int i = 0; i < PatrolPoints.Length; i++)
+        while(numeroRepetido < 6)
         {
-            for (int j = 0; j < PatrolPoints.Length; j++)
-            {
+            GameObject Waypoint = RandomWaypoint();
+            bool Repetido = true; 
 
-            }
-
-            for (int j = 0; j != numeroRepetido; j = Random.Range(0, TotalPatrolPoints.Length))
+            if (Repetido == false)
             {
-                Debug.Log(randomPoints);
-                numeroRepetido = randomPoints;
-                PatrolPoints[i] = TotalPatrolPoints[randomPoints];
+                //PatrolPoints[];
             }
         }
 
         return PatrolPoints;
-    }*/
+    }
 
-    public GameObject[] AddWaypoint()
+    public GameObject RandomWaypoint()
+    {
+        int randomPoints = Random.Range(0, TotalPatrolPoints.Length);
+        GameObject random = TotalPatrolPoints[randomPoints];
+
+        return random;
+    }
+
+    /*public GameObject[] AddWaypoint()
     {
         GameObject[] PatrolPoints = new GameObject[6];      //Array de todos los puntos del Mapa
 
@@ -99,7 +103,7 @@ public class AIDirector : MonoBehaviour
         }
 
         return PatrolPoints;
-    }
+    }*/
 
 
     //METODO ALARM
