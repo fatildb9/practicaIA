@@ -14,8 +14,6 @@ public class Alarm : StateMachineBehaviour
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();    //referencia al NavMesh del agente
 
         agentNavMesh.speed = originalVelocity;      //velocidad del agente
-
-        Debug.Log("ALARMAAAA");
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

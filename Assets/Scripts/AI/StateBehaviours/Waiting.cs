@@ -12,32 +12,21 @@ public class Waiting : StateMachineBehaviour
         agentNavMesh = animator.gameObject.GetComponent<NavMeshAgent>();    //referencia al Nav mesh del agente
 
         agentNavMesh.speed = 0;     //hacemos que pare el rover
-
-        
-        /* MANERA DE QUITAR INVENTARIO
-        int baseMask = 1 << NavMesh.GetAreaFromName("Base");                        //Detección del area "Base"
-        NavMeshHit hit;
-        if (!NavMesh.SamplePosition(agentNavMesh.transform.position, out hit, 0.2f, baseMask))    //Si la posición está tocando el area "Base"...
-        {
-            animator.GetBehaviour<Collect>().inventario = 0;
-            Debug.Log("reset inventario");
-        }*/
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.speed = 0;
+        agentNavMesh.speed = 0;     //el rover se queda parado 
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agentNavMesh.speed = 3.5f;
+        agentNavMesh.speed = 3.5f;  //al salir ponemos la velocidad original del rover
     }
 
-    //MÉTODO DE QUITAR INVENTARIO(quita el invenario)
+    //MÉTODO DE QUITAR INVENTARIO(quita el invenario) 
     public void QuitarInventario(Animator animator)
     {
-        Debug.Log("INVENTARIO");
-        animator.GetBehaviour<Collect>().inventario = 0;
+        animator.GetBehaviour<Collect>().inventario = 0;    //accedemos a la variable de inventario y la reseteamos 
     }
 }

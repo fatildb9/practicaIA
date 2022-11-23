@@ -23,11 +23,10 @@ public class Search : StateMachineBehaviour
     public GameObject[] PatrolPoints;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        //Si el array no esta lleno
-        if (PatrolPoints.Length == 0)
+    {   
+        if (PatrolPoints.Length == 0)       //Si el array no esta lleno
         {   
-            PatrolPoints = AIDirector.Instance.AddWaypoint();       //Llamamos al metodo del director
+            PatrolPoints = AIDirector.Instance.AddWaypoint();       //Llamamos al metodo del director de añadir puntos
         }
 
 

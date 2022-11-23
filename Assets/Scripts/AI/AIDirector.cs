@@ -32,13 +32,12 @@ public class AIDirector : MonoBehaviour
     public GameObject[] Rovers;                 //Array de puntos de patrulla
     public Transform baseWaypoint;              //Punto para ir a la base 
 
-    public float tiempoEnLlegar;
-    public float tiempoDeDuracion;
-    public float tiempoEnAlarmar;
+    public float tiempoEnLlegar;                //variable del tiempo que tarde en llegar
+    public float tiempoDeDuracion;              //variable con el tiempo que dura la tormenta 
+    public float tiempoEnAlarmar;               //variable con el tiempo que tarda en alarmar
 
-    public float seconds;
-    public bool alarm = true;
-    public bool wait = true;
+    public float seconds;                       //variable en la que contar los segundos 
+    public bool alarm = true;                   //bool que indica el comienzo del alarmar
 
     private void Start()
     {
@@ -51,7 +50,7 @@ public class AIDirector : MonoBehaviour
     private void Update()
     {
         //CONTADOR de segundos para alarmar
-        if (seconds >= (tiempoEnLlegar - tiempoEnAlarmar) && alarm == true)                    
+        if (seconds >= (tiempoEnLlegar - tiempoEnAlarmar) && alarm == true)  //cuando llega al tiempo y el bool es verdadero entra                  
         {
             Alarm();            //Llamamos al método alarm
             alarm = false;      //Booleano para que solo se realice una vez
@@ -110,11 +109,11 @@ public class AIDirector : MonoBehaviour
     //ARENA INICIO Y FINAL 
     private void StartStorm()
     {
-        Storm.SetActive(true);
+        Storm.SetActive(true);      //se activa la tomrneta
     }
     private void StopStorm()
     {
-        Storm.SetActive(false);
+        Storm.SetActive(false);     //se desactiva la tormenta
     }
     
     //METODO QUITAR INVENTARIO
@@ -126,9 +125,8 @@ public class AIDirector : MonoBehaviour
             NavMeshHit hit;
             if (!NavMesh.SamplePosition(Rovers[i].transform.position, out hit, 0.2f, baseMask))    //Si la posición está tocando el area "Base"...
             {
-                Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToWait");        //cambia al estado de Search 
-                Debug.Log("una vez");
-                Rovers[i].transform.GetComponent<Animator>().GetBehaviour<Waiting>().QuitarInventario(Rovers[i].transform.GetComponent<Animator>());    //Pone su inventario a 0 
+                Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToWait");        //cambia al estado a wait si no esta en base
+                Rovers[i].transform.GetComponent<Animator>().GetBehaviour<Waiting>().QuitarInventario(Rovers[i].transform.GetComponent<Animator>());    //Llama al método para quitar el inventario
             }
         }
     }
@@ -140,7 +138,6 @@ public class AIDirector : MonoBehaviour
         tiempoDeDuracion = Random.Range(15, 30);    //Detecta el tiempo que dura la tormenta 
         tiempoEnAlarmar = Random.Range(20, 30);     //Detecta el tiempo que tardará en alarmar
 
-        Debug.Log("Entre");
         while (true)
         {
             StopStorm();            //La tormenta para 
@@ -153,7 +150,6 @@ public class AIDirector : MonoBehaviour
             SearchAgain();          //Pasa a search de nuevo 
             seconds = 0;            //se resetea el tiempo 
             alarm = true;           //Se resetea el bool de alarma
-            wait = true;           //Se resetea el bool de alarma
         }
     }
 }
