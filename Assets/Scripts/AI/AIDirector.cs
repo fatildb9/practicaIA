@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,7 +19,6 @@ public class AIDirector : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //OPTIONAL
         DontDestroyOnLoad(gameObject);  //Sets this to not be destroyed when reloding scene  
     }
 
@@ -43,8 +42,8 @@ public class AIDirector : MonoBehaviour
 
     private void Start()
     {
-        TotalPatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");
-        Rovers = GameObject.FindGameObjectsWithTag("Rover");
+        TotalPatrolPoints = GameObject.FindGameObjectsWithTag("waypoint");      //detecta todos los puntos y los guarda
+        Rovers = GameObject.FindGameObjectsWithTag("Rover");                    //detecta todos los rovers y los guarda
 
         StartCoroutine(TormentaArena());    //Comienza la tormenta de arena
     }
@@ -59,7 +58,7 @@ public class AIDirector : MonoBehaviour
         }
         else
         {
-            seconds = seconds + 1 * Time.deltaTime;     
+            seconds = seconds + 1 * Time.deltaTime;     //seguimos contando 
         }
         
     }
@@ -67,49 +66,26 @@ public class AIDirector : MonoBehaviour
     //METODO LISTA DE WAYPOINTS
     public GameObject[] AddWaypoint()
     {
-        GameObject[] PatrolPoints = new GameObject[6];      //Array de todos los puntos del Mapa
-        int numeroRepetido = 0;
+        GameObject[] PatrolPoints = new GameObject[6];                  //Array de los puntos del Mapa que se le va a dar a los rovers
+        List<GameObject> PuntosRepetidos = new List<GameObject>();      //Lista en la que guardar todos los puntos 
 
-        while(numeroRepetido < 6)
+        PuntosRepetidos.AddRange(TotalPatrolPoints);                    //Añadimos a la lista todos los puntos del array
+        
+        for (int i = 0; i < 6; i++)                                     //Bucle que coge 6 puntos 
         {
-            GameObject Waypoint = RandomWaypoint();
-            bool Repetido = true; 
+            int randomPoint = Random.Range(0, PuntosRepetidos.Count);   //Numero random
+            GameObject waypoint = PuntosRepetidos[randomPoint];         //Cogemos el waypoint de esa posicion
 
-            if (Repetido == false)
-            {
-                //PatrolPoints[];
-            }
+            PatrolPoints[i] = waypoint;                                 //metemos el waapoint en el array del inicio
+            PuntosRepetidos.Remove(waypoint);                           //borramos el waypoint de la lista para que no se repita
         }
 
-        return PatrolPoints;
+        return PatrolPoints;        //cuando termine el bucle pasamos la lista con los seis puntos 
     }
-
-    public GameObject RandomWaypoint()
-    {
-        int randomPoints = Random.Range(0, TotalPatrolPoints.Length);
-        GameObject random = TotalPatrolPoints[randomPoints];
-
-        return random;
-    }
-
-    /*public GameObject[] AddWaypoint()
-    {
-        GameObject[] PatrolPoints = new GameObject[6];      //Array de todos los puntos del Mapa
-
-        for (int i = 0; i < PatrolPoints.Length; i++)
-        {
-            int randomPoints = Random.Range(0, TotalPatrolPoints.Length);
-            PatrolPoints[i] = TotalPatrolPoints[randomPoints];
-        }
-
-        return PatrolPoints;
-    }*/
-
 
     //METODO ALARM
     public void Alarm()
     {
-        Debug.Log("Doy la alarma");
         for (int i = 0; i < Rovers.Length; i++)     //Pasa por cada uno de los rovers del array
         {
             Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToAlarm");         //se pasa al estado de alarm
@@ -125,7 +101,6 @@ public class AIDirector : MonoBehaviour
     //METODO PARA VOLVER A SEARCH TRAS WAITING
     public void SearchAgain()
     {
-        Debug.Log("Voy a search ");
         for (int i = 0; i < Rovers.Length; i++)         //Pasa por cada uno de los rovers del array 
         {
             Rovers[i].transform.GetComponent<Animator>().SetTrigger("timeToSearch");        //cambia al estado de Search 

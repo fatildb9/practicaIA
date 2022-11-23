@@ -34,7 +34,7 @@ public class Waiting : StateMachineBehaviour
         agentNavMesh.speed = 3.5f;
     }
 
-    //MÉTODO DE QUITAR INVENTARIO
+    //MÉTODO DE QUITAR INVENTARIO(quita el invenario)
     public void QuitarInventario(Animator animator)
     {
         Debug.Log("INVENTARIO");

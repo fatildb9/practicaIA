@@ -21,13 +21,13 @@ public class Search : StateMachineBehaviour
     public Transform target;            //variable para seguir el objetivo
 
     public GameObject[] PatrolPoints;
-    //public List<GameObject> PatrolPoints = new List<GameObject>();
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Si el array no esta lleno
         if (PatrolPoints.Length == 0)
-        {
-            PatrolPoints = AIDirector.Instance.AddWaypoint();
+        {   
+            PatrolPoints = AIDirector.Instance.AddWaypoint();       //Llamamos al metodo del director
         }
 
 
