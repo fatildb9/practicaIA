@@ -45,7 +45,7 @@ public class Alarm : StateMachineBehaviour
         {
             if (agentNavMesh.speed == originalVelocity)             //Y si su velocidad es original e igual a la guardada previamente en el start...
             {
-                agentNavMesh.speed = agentNavMesh.speed / 2;        //Divide la velocidad entre 2 (reduce un 50% su velocidad)
+                agentNavMesh.speed = agentNavMesh.speed / 2;        //reduce un 50% su velocidad
             }
         }
         else
